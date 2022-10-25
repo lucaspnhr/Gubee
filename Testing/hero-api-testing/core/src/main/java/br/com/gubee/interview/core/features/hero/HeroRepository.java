@@ -1,9 +1,6 @@
 package br.com.gubee.interview.core.features.hero;
 
-import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
 import br.com.gubee.interview.model.Hero;
-import br.com.gubee.interview.model.PowerStats;
-import br.com.gubee.interview.model.request.RetriveHeroRequest;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +19,7 @@ import java.util.UUID;
 @Slf4j
 public class HeroRepository {
 
+    private static final String RETRIVE_ALL_HEROS_BY_NAME_QUERY = "SELECT * FROM hero WHERE LOWER(name) LIKE LOWER('%pattern%')" ;
     private static final String RETRIVE_ALL_HERO_QUERY = "SELECT * FROM hero";
     private static final String CREATE_HERO_QUERY = "INSERT INTO hero" +
         " (name, race, power_stats_id)" +
@@ -33,6 +31,10 @@ public class HeroRepository {
     public static final String DELETE_HERO_BY_ID = "DELETE FROM hero WHERE id = :id";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    boolean alreadyExists(String heroName){
+        return !retriveByName(heroName).isEmpty();
+    }
 
     UUID create(Hero hero) {
         final Map<String, Object> params = Map.of("name", hero.getName(),
@@ -60,12 +62,12 @@ public class HeroRepository {
 
     List<Hero> retriveByName(String name){
             return namedParameterJdbcTemplate.query(
-                    RETRIVE_ALL_HERO_QUERY,
+                    RETRIVE_ALL_HEROS_BY_NAME_QUERY.replace("pattern",name),
                     new BeanPropertyRowMapper<>(Hero.class)
             );
     }
-    int updateHero(UUID id, UpdateHeroRequest heroToUpdate){
-        final Map<String, Object> params = Map.of("id", id,
+    int updateHero(Hero heroToUpdate){
+        final Map<String, Object> params = Map.of("id", heroToUpdate.getId(),
                 "name", heroToUpdate.getName(),
                 "race", heroToUpdate.getRace().name());
 

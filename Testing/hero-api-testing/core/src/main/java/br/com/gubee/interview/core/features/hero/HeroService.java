@@ -1,5 +1,6 @@
 package br.com.gubee.interview.core.features.hero;
 
+import br.com.gubee.interview.core.exception.customException.HeroAlredyExistsException;
 import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
 import br.com.gubee.interview.core.features.powerstats.PowerStatsService;
 import br.com.gubee.interview.model.Hero;
@@ -27,9 +28,13 @@ public class HeroService {
 
     @Transactional
     public UUID create(CreateHeroRequest createHeroRequest) {
+        boolean exist = heroRepository.alreadyExists(createHeroRequest.getName());
+        if(exist){
+            throw new HeroAlredyExistsException(createHeroRequest.getName());
+        }
         UUID powerStatsId = powerStatsService.create(new PowerStats(createHeroRequest));
-        log.info("Creating a hero entity from createHeroRequest object");
-        return heroRepository.create(new Hero(createHeroRequest, powerStatsId));
+        Hero heroToAdd = new Hero(createHeroRequest, powerStatsId);
+        return heroRepository.create(heroToAdd);
     }
 
     @Transactional
@@ -43,35 +48,36 @@ public class HeroService {
             return Collections.emptyList();
         }
         List<Hero> retrivedHeros = heroRepository.retriveByName(name);
-        return retrivedHeros.stream().filter((hero) -> hero.getName().toLowerCase().contains(name.toLowerCase())).map(this::createRetriveHero).collect(Collectors.toList());
+        return retrivedHeros.stream()
+                .map(this::createRetriveHero)
+                .collect(Collectors.toList());
     }
 
     @Transactional
     public RetriveHeroRequest update(UUID id, UpdateHeroRequest updateHeroRequest){
-        RetriveHeroRequest retriveHero = new RetriveHeroRequest();
-        Hero hero = (heroRepository.retriveById(id)).orElseThrow(() -> {
-            throw new NotFoundHeroException(id);
-        });
-        powerStatsService.update(updateHeroRequest, hero.getPowerStatsId());
-        int updateReturn = heroRepository.updateHero(id, updateHeroRequest);
-        if(updateReturn > 0){
-            retriveHero = heroRepository.retriveById(id).map(this::createRetriveHero).get();
-        }
-        return retriveHero;
+        Hero oldHero = heroRepository.retriveById(id)
+                .orElseThrow(() -> new NotFoundHeroException(id));
+        powerStatsService.update(updateHeroRequest, oldHero.getPowerStatsId());
+        Hero heroUpdated = updateHeroRequestToHero(updateHeroRequest, oldHero);
+        int updateReturn = heroRepository.updateHero(heroUpdated);
+        return updateReturn > 0 ?
+                createRetriveHero(heroUpdated)
+                : createRetriveHero(oldHero);
     }
+
     @Transactional
     public void deleteById(UUID id){
         Hero hero = heroRepository.retriveById(id).orElseThrow(() -> new NotFoundHeroException(id));
         powerStatsService.deleteById(hero.getPowerStatsId());
         heroRepository.delete(hero.getId());
     }
+
     @Transactional
     public List<RetriveHeroRequest> retriveHerosByIds(UUID firstHero, UUID secondHero) {
-        Hero firstRetrivedHero = (heroRepository.retriveById(firstHero)).orElseThrow(()->{throw new NotFoundHeroException(firstHero);});
-        Hero secondRetrivedHero = (heroRepository.retriveById(secondHero)).orElseThrow(()->{throw new NotFoundHeroException(secondHero);});
+        Hero firstRetrivedHero = (heroRepository.retriveById(firstHero)).orElseThrow(()-> new NotFoundHeroException(firstHero));
+        Hero secondRetrivedHero = (heroRepository.retriveById(secondHero)).orElseThrow(()-> new NotFoundHeroException(secondHero));
         return List.of(createRetriveHero(firstRetrivedHero),createRetriveHero(secondRetrivedHero));
     }
-
     private RetriveHeroRequest createRetriveHero(Hero hero) {
         PowerStats powerStats = powerStatsService.retriveById(hero.getPowerStatsId());
         return RetriveHeroRequest.builder()
@@ -82,6 +88,20 @@ public class HeroService {
                 .agility(powerStats.getAgility())
                 .dexterity(powerStats.getDexterity())
                 .intelligence(powerStats.getIntelligence()).build();
+    }
+
+    private Hero updateHeroRequestToHero(UpdateHeroRequest updateHeroRequest, Hero oldHero) {
+        if(updateHeroRequest.getName().isEmpty() || updateHeroRequest.getName() == null){
+            updateHeroRequest.setName(oldHero.getName());
+        }else if(updateHeroRequest.getRace() == null){
+            updateHeroRequest.setRace(oldHero.getRace());
+        }
+        return Hero.builder()
+                .id(oldHero.getId())
+                .name(updateHeroRequest.getName())
+                .race(updateHeroRequest.getRace())
+                .powerStatsId(oldHero.getPowerStatsId())
+                .build();
     }
 
 
