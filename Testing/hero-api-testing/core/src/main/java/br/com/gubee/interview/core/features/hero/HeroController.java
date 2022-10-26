@@ -2,7 +2,7 @@ package br.com.gubee.interview.core.features.hero;
 
 import br.com.gubee.interview.model.request.BattleHeroRequest;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
-import br.com.gubee.interview.model.request.RetriveHeroRequest;
+import br.com.gubee.interview.model.request.RetrieveHeroRequest;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,27 +32,27 @@ public class HeroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RetriveHeroRequest> findHeroById(@PathVariable(required = false) UUID id){
-        final RetriveHeroRequest retriveHeroRequest = heroService.retriveById(id);
-        return ok(retriveHeroRequest);
+    public ResponseEntity<RetrieveHeroRequest> findHeroById(@PathVariable(required = false) UUID id){
+        final RetrieveHeroRequest retrieveHeroRequest = heroService.retriveById(id);
+        return ok(retrieveHeroRequest);
     }
     @GetMapping("/filter")
-    public ResponseEntity<List<RetriveHeroRequest>> findHeroByName(@RequestParam(required = false) String name){
-        final List<RetriveHeroRequest> retriveHeroRequest = heroService.retriveByName(name);
-        return retriveHeroRequest.size() > 0 ? ok(retriveHeroRequest) : ok().build();
+    public ResponseEntity<List<RetrieveHeroRequest>> findHeroByName(@RequestParam(required = false) String name){
+        final List<RetrieveHeroRequest> retrieveHeroRequest = heroService.retriveByName(name);
+        return retrieveHeroRequest.size() > 0 ? ok(retrieveHeroRequest) : ok().build();
     }
 
     @GetMapping("/battle")
     public ResponseEntity<BattleHeroRequest> compareToHeroes(@RequestParam(required = false) UUID firstHero,
                                                              @RequestParam(required = false) UUID secondHero){
-        List<RetriveHeroRequest> herosToCompare =  heroService.retriveHerosByIds((firstHero), (secondHero));
+        List<RetrieveHeroRequest> herosToCompare =  heroService.retriveHerosByIds((firstHero), (secondHero));
         BattleHeroRequest battleHeroRequest = new BattleHeroRequest(herosToCompare.get(0), herosToCompare.get(1));
         return ok(battleHeroRequest);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RetriveHeroRequest> updateHero(@PathVariable UUID id, @RequestBody UpdateHeroRequest updateHeroRequest){
-        RetriveHeroRequest updatedHero = heroService.update(id, updateHeroRequest);
+    public ResponseEntity<RetrieveHeroRequest> updateHero(@PathVariable UUID id, @RequestBody UpdateHeroRequest updateHeroRequest){
+        RetrieveHeroRequest updatedHero = heroService.update(id, updateHeroRequest);
         return ok(updatedHero);
     }
 

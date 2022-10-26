@@ -19,8 +19,8 @@ public class BattleHeroRequest {
     private int dexterity;
     private int intelligence;
 
-    public BattleHeroRequest(RetriveHeroRequest firstHero,
-                             RetriveHeroRequest secondHero ) {
+    public BattleHeroRequest(RetrieveHeroRequest firstHero,
+                             RetrieveHeroRequest secondHero ) {
         heros.put(firstHero.getName(), firstHero.getId());
         heros.put(secondHero.getName(), secondHero.getId());
         this.strength = firstHero.getStrength() - secondHero.getStrength();

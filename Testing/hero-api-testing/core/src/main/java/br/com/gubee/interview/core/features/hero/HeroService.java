@@ -6,7 +6,7 @@ import br.com.gubee.interview.core.features.powerstats.PowerStatsService;
 import br.com.gubee.interview.model.Hero;
 import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
-import br.com.gubee.interview.model.request.RetriveHeroRequest;
+import br.com.gubee.interview.model.request.RetrieveHeroRequest;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +38,13 @@ public class HeroService {
     }
 
     @Transactional
-    public RetriveHeroRequest retriveById(UUID id){
-        Hero retrivedHero = (heroRepository.retriveById(id)).orElseThrow(()->{throw new NotFoundHeroException(id);});
+    public RetrieveHeroRequest retriveById(UUID id){
+        Hero retrivedHero = (heroRepository.retriveById(id))
+                .orElseThrow(()-> new NotFoundHeroException(id));
         return createRetriveHero(retrivedHero);
     }
     @Transactional
-    public List<RetriveHeroRequest> retriveByName(String name){
+    public List<RetrieveHeroRequest> retriveByName(String name){
         if( name == null || name.isEmpty()){
             return Collections.emptyList();
         }
@@ -54,7 +55,7 @@ public class HeroService {
     }
 
     @Transactional
-    public RetriveHeroRequest update(UUID id, UpdateHeroRequest updateHeroRequest){
+    public RetrieveHeroRequest update(UUID id, UpdateHeroRequest updateHeroRequest){
         Hero oldHero = heroRepository.retriveById(id)
                 .orElseThrow(() -> new NotFoundHeroException(id));
         powerStatsService.update(updateHeroRequest, oldHero.getPowerStatsId());
@@ -73,14 +74,14 @@ public class HeroService {
     }
 
     @Transactional
-    public List<RetriveHeroRequest> retriveHerosByIds(UUID firstHero, UUID secondHero) {
+    public List<RetrieveHeroRequest> retriveHerosByIds(UUID firstHero, UUID secondHero) {
         Hero firstRetrivedHero = (heroRepository.retriveById(firstHero)).orElseThrow(()-> new NotFoundHeroException(firstHero));
         Hero secondRetrivedHero = (heroRepository.retriveById(secondHero)).orElseThrow(()-> new NotFoundHeroException(secondHero));
         return List.of(createRetriveHero(firstRetrivedHero),createRetriveHero(secondRetrivedHero));
     }
-    private RetriveHeroRequest createRetriveHero(Hero hero) {
+    private RetrieveHeroRequest createRetriveHero(Hero hero) {
         PowerStats powerStats = powerStatsService.retriveById(hero.getPowerStatsId());
-        return RetriveHeroRequest.builder()
+        return RetrieveHeroRequest.builder()
                 .id(hero.getId())
                 .name(hero.getName())
                 .race(hero.getRace())

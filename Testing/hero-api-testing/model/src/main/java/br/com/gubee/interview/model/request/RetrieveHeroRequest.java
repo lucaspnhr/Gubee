@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RetriveHeroRequest {
+public class RetrieveHeroRequest {
     private UUID id;
     private String name;
     private Race race;
@@ -27,7 +27,7 @@ public class RetriveHeroRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RetriveHeroRequest that = (RetriveHeroRequest) o;
+        RetrieveHeroRequest that = (RetrieveHeroRequest) o;
         return strength == that.strength && agility == that.agility && dexterity == that.dexterity && intelligence == that.intelligence && Objects.equals(id, that.id) && Objects.equals(name, that.name) && race == that.race;
     }
 
