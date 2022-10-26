@@ -2,33 +2,20 @@ package br.com.gubee.interview.core.features.powerstats;
 
 import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-public class PowerStatsService {
-
-    private final PowerStatsRepository powerStatsRepository;
+public interface PowerStatsService {
+    @Transactional
+    UUID create(PowerStats powerStats);
 
     @Transactional
-    public UUID create(PowerStats powerStats) {
-        return powerStatsRepository.create(powerStats);
-    }
+    PowerStats retriveById(UUID id);
 
     @Transactional
-    public PowerStats retriveById(UUID id){
-        return powerStatsRepository.retriveById(id);
-    }
+    int update(UpdateHeroRequest updateHeroRequest, UUID powerStatsId);
+
     @Transactional
-    public int update(UpdateHeroRequest updateHeroRequest, UUID powerStatsId) {
-        return powerStatsRepository.updatePowerStats(updateHeroRequest, powerStatsId);
-    }
-    @Transactional
-    public UUID deleteById(UUID powerStatsId) {
-        return powerStatsRepository.delete(powerStatsId);
-    }
+    int deleteById(UUID powerStatsId);
 }

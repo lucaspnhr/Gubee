@@ -23,23 +23,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class HeroService {
 
-    private final HeroRepository heroRepository;
+    private final HeroRepositoryI heroRepositoryI;
     private final PowerStatsService powerStatsService;
 
     @Transactional
     public UUID create(CreateHeroRequest createHeroRequest) {
-        boolean exist = heroRepository.alreadyExists(createHeroRequest.getName());
+        boolean exist = heroRepositoryI.alreadyExists(createHeroRequest.getName());
         if(exist){
             throw new HeroAlredyExistsException(createHeroRequest.getName());
         }
         UUID powerStatsId = powerStatsService.create(new PowerStats(createHeroRequest));
         Hero heroToAdd = new Hero(createHeroRequest, powerStatsId);
-        return heroRepository.create(heroToAdd);
+        return heroRepositoryI.create(heroToAdd);
     }
 
     @Transactional
     public RetrieveHeroRequest retriveById(UUID id){
-        Hero retrivedHero = (heroRepository.retriveById(id))
+        Hero retrivedHero = (heroRepositoryI.retriveById(id))
                 .orElseThrow(()-> new NotFoundHeroException(id));
         return createRetriveHero(retrivedHero);
     }
@@ -48,7 +48,7 @@ public class HeroService {
         if( name == null || name.isEmpty()){
             return Collections.emptyList();
         }
-        List<Hero> retrivedHeros = heroRepository.retriveByName(name);
+        List<Hero> retrivedHeros = heroRepositoryI.retriveByName(name);
         return retrivedHeros.stream()
                 .map(this::createRetriveHero)
                 .collect(Collectors.toList());
@@ -56,11 +56,11 @@ public class HeroService {
 
     @Transactional
     public RetrieveHeroRequest update(UUID id, UpdateHeroRequest updateHeroRequest){
-        Hero oldHero = heroRepository.retriveById(id)
+        Hero oldHero = heroRepositoryI.retriveById(id)
                 .orElseThrow(() -> new NotFoundHeroException(id));
         powerStatsService.update(updateHeroRequest, oldHero.getPowerStatsId());
         Hero heroUpdated = updateHeroRequestToHero(updateHeroRequest, oldHero);
-        int updateReturn = heroRepository.updateHero(heroUpdated);
+        int updateReturn = heroRepositoryI.update(heroUpdated);
         return updateReturn > 0 ?
                 createRetriveHero(heroUpdated)
                 : createRetriveHero(oldHero);
@@ -68,15 +68,15 @@ public class HeroService {
 
     @Transactional
     public void deleteById(UUID id){
-        Hero hero = heroRepository.retriveById(id).orElseThrow(() -> new NotFoundHeroException(id));
+        Hero hero = heroRepositoryI.retriveById(id).orElseThrow(() -> new NotFoundHeroException(id));
         powerStatsService.deleteById(hero.getPowerStatsId());
-        heroRepository.delete(hero.getId());
+        heroRepositoryI.delete(hero.getId());
     }
 
     @Transactional
     public List<RetrieveHeroRequest> retriveHerosByIds(UUID firstHero, UUID secondHero) {
-        Hero firstRetrivedHero = (heroRepository.retriveById(firstHero)).orElseThrow(()-> new NotFoundHeroException(firstHero));
-        Hero secondRetrivedHero = (heroRepository.retriveById(secondHero)).orElseThrow(()-> new NotFoundHeroException(secondHero));
+        Hero firstRetrivedHero = (heroRepositoryI.retriveById(firstHero)).orElseThrow(()-> new NotFoundHeroException(firstHero));
+        Hero secondRetrivedHero = (heroRepositoryI.retriveById(secondHero)).orElseThrow(()-> new NotFoundHeroException(secondHero));
         return List.of(createRetriveHero(firstRetrivedHero),createRetriveHero(secondRetrivedHero));
     }
     private RetrieveHeroRequest createRetriveHero(Hero hero) {

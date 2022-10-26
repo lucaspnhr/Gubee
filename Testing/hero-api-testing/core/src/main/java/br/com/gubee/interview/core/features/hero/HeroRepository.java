@@ -1,7 +1,6 @@
 package br.com.gubee.interview.core.features.hero;
 
 import br.com.gubee.interview.model.Hero;
-import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,7 +16,7 @@ import java.util.UUID;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class HeroRepository {
+public class HeroRepository implements HeroRepositoryI {
 
     private static final String RETRIVE_ALL_HEROS_BY_NAME_QUERY = "SELECT * FROM hero WHERE LOWER(name) LIKE LOWER('%pattern%')" ;
     private static final String RETRIVE_ALL_HERO_QUERY = "SELECT * FROM hero";
@@ -32,11 +31,13 @@ public class HeroRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    boolean alreadyExists(String heroName){
+    @Override
+    public boolean alreadyExists(String heroName){
         return !retriveByName(heroName).isEmpty();
     }
 
-    UUID create(Hero hero) {
+    @Override
+    public UUID create(Hero hero) {
         final Map<String, Object> params = Map.of("name", hero.getName(),
             "race", hero.getRace().name(),
             "powerStatsId", hero.getPowerStatsId());
@@ -47,7 +48,8 @@ public class HeroRepository {
             UUID.class);
     }
 
-    Optional<Hero> retriveById(UUID heroId){
+    @Override
+    public Optional<Hero> retriveById(UUID heroId){
         final Map<String, Object> params = Map.of("id", heroId);
         try{
             return Optional.ofNullable(namedParameterJdbcTemplate.queryForObject(
@@ -60,13 +62,15 @@ public class HeroRepository {
         }
     }
 
-    List<Hero> retriveByName(String name){
+    @Override
+    public List<Hero> retriveByName(String name){
             return namedParameterJdbcTemplate.query(
                     RETRIVE_ALL_HEROS_BY_NAME_QUERY.replace("pattern",name),
                     new BeanPropertyRowMapper<>(Hero.class)
             );
     }
-    int updateHero(Hero heroToUpdate){
+    @Override
+    public int update(Hero heroToUpdate){
         final Map<String, Object> params = Map.of("id", heroToUpdate.getId(),
                 "name", heroToUpdate.getName(),
                 "race", heroToUpdate.getRace().name());
@@ -77,7 +81,8 @@ public class HeroRepository {
         );
     }
 
-    int delete(UUID id){
+    @Override
+    public int delete(UUID id){
         Map<String, UUID> param = Map.of("id", id);
         return namedParameterJdbcTemplate.update(
                 DELETE_HERO_BY_ID,

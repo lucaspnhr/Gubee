@@ -1,19 +1,21 @@
 package br.com.gubee.interview.core.features.powerstats;
 
+import br.com.gubee.interview.core.features.base.repository.BaseRepository;
 import br.com.gubee.interview.model.PowerStats;
-import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
-public class PowerStatsRepository {
+public class PowerStatsRepository implements BaseRepository<PowerStats, UUID>, PowerStatsRepositoryI {
 
     private static final String CREATE_POWER_STATS_QUERY = "INSERT INTO power_stats" +
         " (strength, agility, dexterity, intelligence)" +
@@ -25,28 +27,36 @@ public class PowerStatsRepository {
     public static final String DELETE_POWER_STATS_BY_ID = "DELETE FROM power_stats WHERE id = :id RETURNING id";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    UUID create(PowerStats powerStats) {
+    @Override
+    public UUID create(PowerStats powerStats) {
         return namedParameterJdbcTemplate.queryForObject(
             CREATE_POWER_STATS_QUERY,
             new BeanPropertySqlParameterSource(powerStats),
             UUID.class);
     }
 
-    PowerStats retriveById(UUID id){
+    @Override
+    public Optional<PowerStats> retriveById(UUID id){
         final Map<String, Object> params = Map.of("id", id);
-        return namedParameterJdbcTemplate.query(
+        try{
+            return Optional.ofNullable(namedParameterJdbcTemplate.queryForObject(
                 RETRIVE_POWER_STATS_BY_ID_QUERY,
                 params,
                 new BeanPropertyRowMapper<>(PowerStats.class)
-        ).get(0);
+        ));}
+        catch (EmptyResultDataAccessException e){
+            return Optional.empty();
+        }
     }
 
-    int updatePowerStats(UpdateHeroRequest heroToUpdate, UUID powerStatsId){
-        final Map<String, Object> params = Map.of("id", powerStatsId,
-                "strength", heroToUpdate.getStrength(),
-                "agility", heroToUpdate.getAgility(),
-                "dexterity", heroToUpdate.getDexterity(),
-                "intelligence", heroToUpdate.getIntelligence());
+
+    @Override
+    public int update(PowerStats powerStats){
+        final Map<String, Object> params = Map.of("id", powerStats.getId(),
+                "strength", powerStats.getStrength(),
+                "agility", powerStats.getAgility(),
+                "dexterity", powerStats.getDexterity(),
+                "intelligence", powerStats.getIntelligence());
 
         return namedParameterJdbcTemplate.update(
                 UPDATE_HERO_QUERY,
@@ -54,12 +64,12 @@ public class PowerStatsRepository {
         );
     }
 
-    UUID delete(UUID id){
+    @Override
+    public int delete(UUID id){
         Map<String, UUID> param = Map.of("id", id);
-        return namedParameterJdbcTemplate.queryForObject(
+        return namedParameterJdbcTemplate.update(
                 DELETE_POWER_STATS_BY_ID,
-                param,
-                UUID.class
+                param
         );
     }
 }
