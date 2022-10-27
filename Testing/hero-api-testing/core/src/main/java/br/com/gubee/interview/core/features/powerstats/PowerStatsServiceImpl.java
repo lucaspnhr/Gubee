@@ -14,7 +14,7 @@ public class PowerStatsServiceImpl implements PowerStatsService {
 
 
 
-    private final PowerStatsRepositoryI powerStatsRepository;
+    private final PowerStatsRepository powerStatsRepository;
 
     @Override
     @Transactional

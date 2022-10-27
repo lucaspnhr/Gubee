@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class HeroService {
 
-    private final HeroRepositoryI heroRepository;
+    private final HeroRepository heroRepository;
     private final PowerStatsService powerStatsService;
 
     @Transactional

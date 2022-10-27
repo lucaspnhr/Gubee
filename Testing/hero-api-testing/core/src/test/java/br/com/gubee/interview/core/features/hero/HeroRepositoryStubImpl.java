@@ -15,11 +15,11 @@ import static br.com.gubee.interview.core.features.util.constants.HeroIds.*;
 import static br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero.*;
 
 @Slf4j
-public class HeroRepositoryTestImpl implements HeroRepositoryI {
+public class HeroRepositoryStubImpl implements HeroRepository {
 
     private List<Hero> HERO_STORAGE = new ArrayList<>();
 
-    public HeroRepositoryTestImpl() {
+    public HeroRepositoryStubImpl() {
 
         this.HERO_STORAGE.add(hero(AQUAMEN_ID, "Aquamen", POWER_STATS_AQUAMEN_ID));
         this.HERO_STORAGE.add(hero(LANTERNA_VERDE_ID, "Lanterna Vermelha", POWER_STATS_LANTERNA_VERMELHA_ID));
@@ -60,34 +60,66 @@ public class HeroRepositoryTestImpl implements HeroRepositoryI {
     public Optional<Hero> retriveById(UUID heroId) {
         return HERO_STORAGE.stream()
                 .filter(hero -> hero.getId().equals(heroId))
+                .map(hero ->
+                        new Hero(hero.getId(),
+                                hero.getName(),
+                                hero.getRace(),
+                                hero.getPowerStatsId(),
+                                hero.getCreatedAt(),
+                                hero.getUpdatedAt(),
+                                hero.isEnabled()))
                 .findFirst();
     }
 
     @Override
     public List<Hero> retriveByName(String name) {
         return HERO_STORAGE.stream()
-                .filter((hero) -> hero.getName().toLowerCase().contains(name.toLowerCase()))
+                .filter(hero -> hero.getName().toLowerCase().contains(name.toLowerCase()))
+                .map(hero ->
+                        new Hero(hero.getId(),
+                                hero.getName(),
+                                hero.getRace(),
+                                hero.getPowerStatsId(),
+                                hero.getCreatedAt(),
+                                hero.getUpdatedAt(),
+                                hero.isEnabled()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public int update(Hero heroToUpdate) {
-        HERO_STORAGE = HERO_STORAGE.stream()
-                .peek((hero) ->{
-                   if (hero.getId().equals(heroToUpdate.getId())){
-                       hero.setName(heroToUpdate.getName());
-                       hero.setRace(heroToUpdate.getRace());
-                       hero.setUpdatedAt(Instant.now());
-                   }
-                }).collect(Collectors.toList());
+        Hero heroToBeUpdated = HERO_STORAGE.stream()
+                .filter(hero -> hero.getId().equals(heroToUpdate.getId()))
+                .map(hero -> new Hero(hero.getId(),
+                        hero.getName(),
+                        hero.getRace(),
+                        hero.getPowerStatsId(),
+                        hero.getCreatedAt(),
+                        hero.getUpdatedAt(),
+                        hero.isEnabled()))
+                .findFirst().get();
+
+        HERO_STORAGE.remove(heroToBeUpdated);
+
+        heroToBeUpdated.setName(heroToUpdate.getName());
+        heroToBeUpdated.setRace(heroToUpdate.getRace());
+        heroToBeUpdated.setUpdatedAt(Instant.now());
+
+        HERO_STORAGE.add(heroToBeUpdated);
         return 1;
     }
 
     @Override
     public int delete(UUID id) {
-        HERO_STORAGE = HERO_STORAGE.stream()
-                .filter(hero -> !hero.getId().equals(id))
-                .collect(Collectors.toList());
+        Hero heroToBeDeleted = HERO_STORAGE.stream()
+                .filter(hero -> hero.getId().equals(id))
+                .findFirst().get();
+        HERO_STORAGE.remove(heroToBeDeleted);
         return 1;
+    }
+
+    @Override
+    public void deleteAll() {
+
     }
 }

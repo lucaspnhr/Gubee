@@ -2,9 +2,9 @@ package br.com.gubee.interview.core.features.hero;
 
 import br.com.gubee.interview.core.exception.customException.HeroAlredyExistsException;
 import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
-import br.com.gubee.interview.core.features.powerstats.PowerStatsRepositoryTestImpl;
+import br.com.gubee.interview.core.features.powerstats.PowerStatsRepositoryStubImpl;
 import br.com.gubee.interview.core.features.powerstats.PowerStatsService;
-import br.com.gubee.interview.core.features.powerstats.PowerStatsServiceTestImpl;
+import br.com.gubee.interview.core.features.powerstats.PowerStatsServiceStubImpl;
 import br.com.gubee.interview.model.enums.Race;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import br.com.gubee.interview.model.request.RetrieveHeroRequest;
@@ -28,8 +28,8 @@ public class HeroServiceTest {
 
     @BeforeEach
     void setUp() {
-        HeroRepositoryI heroRepository = new HeroRepositoryTestImpl();
-        PowerStatsService powerStatsService = new PowerStatsServiceTestImpl(new PowerStatsRepositoryTestImpl());
+        HeroRepository heroRepository = new HeroRepositoryStubImpl();
+        PowerStatsService powerStatsService = new PowerStatsServiceStubImpl(new PowerStatsRepositoryStubImpl());
         this.underTest = new HeroService(heroRepository, powerStatsService);
     }
 

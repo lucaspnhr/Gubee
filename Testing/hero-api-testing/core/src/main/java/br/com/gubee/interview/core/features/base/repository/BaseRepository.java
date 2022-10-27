@@ -17,4 +17,6 @@ public interface BaseRepository<T, ID> {
     int update(T entityToUpdate);
 
     int delete(ID id);
+
+    void deleteAll();
 }
