@@ -1,6 +1,7 @@
 package br.com.gubee.interview.core.features.hero;
 
 import br.com.gubee.interview.core.exception.customException.HeroAlredyExistsException;
+import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
 import br.com.gubee.interview.core.features.powerstats.PowerStatsService;
 import br.com.gubee.interview.core.features.powerstats.PowerStatsServiceFakeImpl;
 import br.com.gubee.interview.model.enums.Race;
@@ -51,6 +52,27 @@ public class HeroServiceTest {
                 .isInstanceOf(HeroAlredyExistsException.class)
                 .hasMessageContaining(heroRequest.getName());
     }
+
+    @Test
+    void shouldRetriveHeroFromDBWhenExists(){
+        final var heroId = UUID.fromString("bda51c4a-583c-4b96-8923-860e28854058");
+
+        RetrieveHeroRequest retrieveHeroRequest = underTest.retriveById(heroId);
+
+        assertThat(retrieveHeroRequest).isNotNull();
+        assertThat(retrieveHeroRequest).hasNoNullFieldsOrProperties();
+
+    }
+
+    @Test
+    void shouldThrowHeroNotFounExceptionWhenHeroNotExistsInDB(){
+        final var heroId = UUID.fromString("bda51c4a-583c-4b96-8923-860e28854628");
+
+         assertThatThrownBy(() -> underTest.retriveById(heroId))
+                 .isInstanceOf(NotFoundHeroException.class)
+                 .hasMessageContaining(heroId.toString());
+    }
+
 
 
     private CreateHeroRequest createHeroRequest() {
