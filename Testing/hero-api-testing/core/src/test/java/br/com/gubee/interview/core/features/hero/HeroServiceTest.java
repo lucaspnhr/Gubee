@@ -2,39 +2,34 @@ package br.com.gubee.interview.core.features.hero;
 
 import br.com.gubee.interview.core.exception.customException.HeroAlredyExistsException;
 import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
+import br.com.gubee.interview.core.features.powerstats.PowerStatsRepositoryTestImpl;
 import br.com.gubee.interview.core.features.powerstats.PowerStatsService;
-import br.com.gubee.interview.core.features.powerstats.PowerStatsServiceFakeImpl;
+import br.com.gubee.interview.core.features.powerstats.PowerStatsServiceTestImpl;
 import br.com.gubee.interview.model.enums.Race;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import br.com.gubee.interview.model.request.RetrieveHeroRequest;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
+import static br.com.gubee.interview.core.features.util.constants.HeroIds.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-@ExtendWith(MockitoExtension.class)
+
 public class HeroServiceTest {
 
-
-    private HeroRepositoryI heroRepository = new HeroRepositoryFakeImpl();
-
-
-    private final PowerStatsService powerStatsService = new PowerStatsServiceFakeImpl();
 
     private HeroService underTest;
 
 
     @BeforeEach
     void setUp() {
-
+        HeroRepositoryI heroRepository = new HeroRepositoryTestImpl();
+        PowerStatsService powerStatsService = new PowerStatsServiceTestImpl(new PowerStatsRepositoryTestImpl());
         this.underTest = new HeroService(heroRepository, powerStatsService);
     }
 
@@ -55,13 +50,11 @@ public class HeroServiceTest {
 
     @Test
     void shouldRetriveHeroFromDBWhenExists(){
-        final var heroId = UUID.fromString("bda51c4a-583c-4b96-8923-860e28854058");
 
-        RetrieveHeroRequest retrieveHeroRequest = underTest.retriveById(heroId);
+        RetrieveHeroRequest retrieveHeroRequest = underTest.retriveById(AQUAMEN_ID);
 
         assertThat(retrieveHeroRequest).isNotNull();
         assertThat(retrieveHeroRequest).hasNoNullFieldsOrProperties();
-
     }
 
     @Test
@@ -73,6 +66,56 @@ public class HeroServiceTest {
                  .hasMessageContaining(heroId.toString());
     }
 
+    @Test
+    void shouldReturnListOfHeroWhenNameMatched(){
+        final var heroName = "Lan";
+
+        List<RetrieveHeroRequest> retrieveHeroRequests = underTest.retriveByName(heroName);
+
+        assertThat(retrieveHeroRequests.isEmpty()).isFalse();
+    }
+
+    @Test
+    void shouldreturnemptyListWhenNameIsEmpty(){
+        final var heroName = "";
+
+        List<RetrieveHeroRequest> retrieveHeroRequests = underTest.retriveByName(heroName);
+
+        assertThat(retrieveHeroRequests.isEmpty()).isTrue();
+    }
+
+    @Test
+    void shouldreturnemptyListWhenNameHasNoMatch(){
+        final var heroName = "Flash";
+
+        List<RetrieveHeroRequest> retrieveHeroRequests = underTest.retriveByName(heroName);
+
+        assertThat(retrieveHeroRequests.isEmpty()).isTrue();
+    }
+
+    @Test
+    void shouldUpdateHeroAndReturnIt(){
+        final var heroId = LANTERNA_VERDE_ID;
+        final var oldHero = underTest.retriveById(heroId);
+        final var updateHeroRequest = UpdateHeroRequest.builder()
+                .name("Lanterna-Verde")
+                .build();
+
+        RetrieveHeroRequest retrieveHeroRequest = underTest.update(heroId, updateHeroRequest);
+
+        assertThat(retrieveHeroRequest).isNotEqualTo(oldHero);
+        assertThat(retrieveHeroRequest.getName()).isEqualTo(updateHeroRequest.getName());
+    }
+
+    @Test
+    void shouldDeleteHeroFromDB(){
+        final var heroId = BATMAN_ID;
+
+        underTest.deleteById(heroId);
+
+        assertThatThrownBy(() -> underTest.retriveById(heroId))
+                .isInstanceOf(NotFoundHeroException.class);
+    }
 
 
     private CreateHeroRequest createHeroRequest() {
