@@ -1,5 +1,6 @@
 package br.com.gubee.interview.core.features.hero;
 
+import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
 import br.com.gubee.interview.model.enums.Race;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import br.com.gubee.interview.model.request.RetrieveHeroRequest;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(HeroController.class)
-class HeroControllerItTest {
+class HeroControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -68,15 +69,24 @@ class HeroControllerItTest {
     }
 
     @Test
-    void returnRetrieveHeroRequestById() throws Exception {
+    void returnRetrieveHeroRequestInBody() throws Exception {
         //given
         when(heroServiceImpl.retriveById(any())).thenReturn(RetrieveHeroRequest.builder().id(UUID.randomUUID()).build());
         //when
         final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/"+UUID.randomUUID()));
-
         //then
         resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+    @Test
+    void whenHeroNotFoundRespondWithNotFound() throws Exception {
+        //given
+        when(heroServiceImpl.retriveById(any())).thenThrow(new NotFoundHeroException(UUID.randomUUID()));
+        //when
+        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/"+UUID.randomUUID()));
+        //then
+        resultActions.andExpect(status().isNotFound()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
 
 
     private CreateHeroRequest createHeroRequest() {

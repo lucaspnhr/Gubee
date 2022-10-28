@@ -96,12 +96,12 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(NotFoundHeroException.class)
-    ResponseEntity<String> handleNotFoundHeroException(NotFoundHeroException e){
+    ResponseEntity<NotFoundHeroException> handleNotFoundHeroException(NotFoundHeroException e){
         log.error(e.getMessage(), e);
-        return status(NOT_FOUND).body(e.getMessage());
+        return status(NOT_FOUND).body(e);
     }
     @ExceptionHandler(HeroAlredyExistsException.class)
-    ResponseEntity<Exception> handleHeroAlredyExistsException(HeroAlredyExistsException e){
+    ResponseEntity<HeroAlredyExistsException> handleHeroAlredyExistsException(HeroAlredyExistsException e){
         log.error(e.getMessage(), e);
         return status(BAD_REQUEST).body(e);
     }
