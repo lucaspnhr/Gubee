@@ -22,7 +22,7 @@ import static org.springframework.http.ResponseEntity.*;
 @RequestMapping(value = "/api/v1/heroes", produces = APPLICATION_JSON_VALUE)
 public class HeroController {
 
-    private final HeroServiceImpl heroServiceImpl;
+    private final HeroService heroServiceImpl;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create(@Validated
