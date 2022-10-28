@@ -20,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 
-public class HeroServiceTest {
+public class HeroServiceImplTest {
 
 
     private HeroService underTest;
@@ -30,7 +30,7 @@ public class HeroServiceTest {
     void setUp() {
         HeroRepository heroRepository = new HeroRepositoryStubImpl();
         PowerStatsService powerStatsService = new PowerStatsServiceStubImpl(new PowerStatsRepositoryStubImpl());
-        this.underTest = new HeroService(heroRepository, powerStatsService);
+        this.underTest = new HeroServiceImpl(heroRepository, powerStatsService);
     }
 
     @Test
@@ -116,6 +116,7 @@ public class HeroServiceTest {
         assertThatThrownBy(() -> underTest.retriveById(heroId))
                 .isInstanceOf(NotFoundHeroException.class);
     }
+
 
 
     private CreateHeroRequest createHeroRequest() {

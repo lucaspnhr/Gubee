@@ -30,11 +30,11 @@ class HeroControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private HeroService heroService;
+    private HeroServiceImpl heroServiceImpl;
 
     @BeforeEach
     public void initTest() {
-        when(heroService.create(any())).thenReturn(UUID.randomUUID());
+        when(heroServiceImpl.create(any())).thenReturn(UUID.randomUUID());
     }
 
     @Test
@@ -50,7 +50,7 @@ class HeroControllerTest {
 
         //then
         resultActions.andExpect(status().isCreated()).andExpect(header().exists("Location"));
-        verify(heroService, times(1)).create(any());
+        verify(heroServiceImpl, times(1)).create(any());
     }
 
 

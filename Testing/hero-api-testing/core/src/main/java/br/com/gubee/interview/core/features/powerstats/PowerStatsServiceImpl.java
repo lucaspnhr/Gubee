@@ -30,11 +30,23 @@ public class PowerStatsServiceImpl implements PowerStatsService {
     @Override
     @Transactional
     public int update(UpdateHeroRequest updateHeroRequest, UUID powerStatsId) {
+        if(updateHeroRequest.getDexterity() == null &&
+                updateHeroRequest.getStrength() == null &&
+                updateHeroRequest.getIntelligence() == null &&
+                updateHeroRequest.getDexterity() == null){
+            return 0;
+        }
+
         PowerStats powerStats = retriveById(powerStatsId);
-        powerStats.setDexterity(updateHeroRequest.getDexterity());
-        powerStats.setStrength(updateHeroRequest.getStrength());
-        powerStats.setIntelligence(updateHeroRequest.getIntelligence());
-        powerStats.setDexterity(updateHeroRequest.getDexterity());
+        if (updateHeroRequest.getDexterity() != null){
+            powerStats.setDexterity(updateHeroRequest.getDexterity());
+        }else if(updateHeroRequest.getStrength() != null){
+            powerStats.setStrength(updateHeroRequest.getStrength());
+        } else if (updateHeroRequest.getIntelligence() != null) {
+            powerStats.setIntelligence(updateHeroRequest.getIntelligence());
+        } else if (updateHeroRequest.getAgility() != null) {
+            powerStats.setAgility(updateHeroRequest.getAgility());
+        }
         return powerStatsRepository.update(powerStats);
     }
     @Override

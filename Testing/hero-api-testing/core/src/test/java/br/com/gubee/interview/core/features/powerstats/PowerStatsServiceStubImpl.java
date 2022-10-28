@@ -25,12 +25,24 @@ public class PowerStatsServiceStubImpl implements PowerStatsService{
 
     @Override
     public int update(UpdateHeroRequest updateHeroRequest, UUID powerStatsId) {
-        PowerStats toBeUpdate = retriveById(powerStatsId);
-        toBeUpdate.setAgility(updateHeroRequest.getAgility());
-        toBeUpdate.setStrength(updateHeroRequest.getStrength());
-        toBeUpdate.setIntelligence(updateHeroRequest.getIntelligence());
-        toBeUpdate.setDexterity(updateHeroRequest.getDexterity());
-        powerStatsRepository.update(toBeUpdate);
+        if(updateHeroRequest.getDexterity() == null &&
+                updateHeroRequest.getStrength() == null &&
+                updateHeroRequest.getIntelligence() == null &&
+                updateHeroRequest.getDexterity() == null){
+            return 0;
+        }
+
+        PowerStats powerStats = retriveById(powerStatsId);
+        if (updateHeroRequest.getDexterity() != null){
+            powerStats.setDexterity(updateHeroRequest.getDexterity());
+        }else if(updateHeroRequest.getStrength() != null){
+            powerStats.setStrength(updateHeroRequest.getStrength());
+        } else if (updateHeroRequest.getIntelligence() != null) {
+            powerStats.setIntelligence(updateHeroRequest.getIntelligence());
+        } else if (updateHeroRequest.getAgility() != null) {
+            powerStats.setAgility(updateHeroRequest.getAgility());
+        }
+        powerStatsRepository.update(powerStats);
         return 1;
     }
 

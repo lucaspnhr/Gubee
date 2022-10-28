@@ -22,43 +22,43 @@ import static org.springframework.http.ResponseEntity.*;
 @RequestMapping(value = "/api/v1/heroes", produces = APPLICATION_JSON_VALUE)
 public class HeroController {
 
-    private final HeroService heroService;
+    private final HeroServiceImpl heroServiceImpl;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create(@Validated
                                        @RequestBody CreateHeroRequest createHeroRequest) {
-        final UUID id = heroService.create(createHeroRequest);
+        final UUID id = heroServiceImpl.create(createHeroRequest);
         return created(URI.create(format("/api/v1/heroes/%s", id))).build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RetrieveHeroRequest> findHeroById(@PathVariable(required = false) UUID id){
-        final RetrieveHeroRequest retrieveHeroRequest = heroService.retriveById(id);
+        final RetrieveHeroRequest retrieveHeroRequest = heroServiceImpl.retriveById(id);
         return ok(retrieveHeroRequest);
     }
     @GetMapping("/filter")
     public ResponseEntity<List<RetrieveHeroRequest>> findHeroByName(@RequestParam(required = false) String name){
-        final List<RetrieveHeroRequest> retrieveHeroRequest = heroService.retriveByName(name);
+        final List<RetrieveHeroRequest> retrieveHeroRequest = heroServiceImpl.retriveByName(name);
         return retrieveHeroRequest.size() > 0 ? ok(retrieveHeroRequest) : ok().build();
     }
 
     @GetMapping("/battle")
     public ResponseEntity<BattleHeroRequest> compareToHeroes(@RequestParam(required = false) UUID firstHero,
                                                              @RequestParam(required = false) UUID secondHero){
-        List<RetrieveHeroRequest> herosToCompare =  heroService.retriveHerosByIds((firstHero), (secondHero));
+        List<RetrieveHeroRequest> herosToCompare =  heroServiceImpl.retriveHerosByIds((firstHero), (secondHero));
         BattleHeroRequest battleHeroRequest = new BattleHeroRequest(herosToCompare.get(0), herosToCompare.get(1));
         return ok(battleHeroRequest);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<RetrieveHeroRequest> updateHero(@PathVariable UUID id, @RequestBody UpdateHeroRequest updateHeroRequest){
-        RetrieveHeroRequest updatedHero = heroService.update(id, updateHeroRequest);
+        RetrieveHeroRequest updatedHero = heroServiceImpl.update(id, updateHeroRequest);
         return ok(updatedHero);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteHeroById(@PathVariable UUID id){
-        heroService.deleteById(id);
+        heroServiceImpl.deleteById(id);
         return noContent().build();
     }
 

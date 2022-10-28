@@ -1,5 +1,6 @@
 package br.com.gubee.interview.core.features.powerstats;
 
+import br.com.gubee.interview.model.Hero;
 import br.com.gubee.interview.model.PowerStats;
 
 import java.time.Instant;
@@ -31,35 +32,53 @@ public class PowerStatsRepositoryStubImpl implements PowerStatsRepository {
     public Optional<PowerStats> retriveById(UUID uuid) {
         return POWER_STATS_REPOSITORY.stream()
                 .filter(powerStats -> powerStats.getId().equals(uuid))
+                .map(powerStats -> new PowerStats(powerStats.getId(),
+                        powerStats.getStrength(),
+                        powerStats.getAgility(),
+                        powerStats.getDexterity(),
+                        powerStats.getIntelligence(),
+                        powerStats.getCreatedAt(),
+                        powerStats.getUpdatedAt()))
                 .findFirst();
     }
 
     @Override
-    public int update(PowerStats entityToUpdate) {
-        POWER_STATS_REPOSITORY = POWER_STATS_REPOSITORY.stream()
-                .peek((powerStats) -> {
-                    if (powerStats.getId().equals(entityToUpdate.getId())){
-                        powerStats.setAgility(entityToUpdate.getAgility());
-                        powerStats.setStrength(entityToUpdate.getStrength());
-                        powerStats.setIntelligence(entityToUpdate.getIntelligence());
-                        powerStats.setDexterity(entityToUpdate.getDexterity());
-                        powerStats.setUpdatedAt(Instant.now());
-                    }
-                }).collect(Collectors.toList());
+    public int update(PowerStats powerStatsToUpdate) {
+        PowerStats powerStatsToBeUpdated = POWER_STATS_REPOSITORY.stream()
+                .filter(powerStats -> powerStats.getId().equals(powerStatsToUpdate.getId()))
+                .map(powerStats -> new PowerStats(powerStats.getId(),
+                        powerStats.getStrength(),
+                        powerStats.getAgility(),
+                        powerStats.getDexterity(),
+                        powerStats.getIntelligence(),
+                        powerStats.getCreatedAt(),
+                        powerStats.getUpdatedAt()))
+                .findFirst().get();
+
+        POWER_STATS_REPOSITORY.remove(powerStatsToBeUpdated);
+
+        powerStatsToBeUpdated.setAgility(powerStatsToUpdate.getAgility());
+        powerStatsToBeUpdated.setStrength(powerStatsToUpdate.getStrength());
+        powerStatsToBeUpdated.setDexterity(powerStatsToUpdate.getDexterity());
+        powerStatsToBeUpdated.setIntelligence(powerStatsToUpdate.getIntelligence());
+        powerStatsToBeUpdated.setUpdatedAt(Instant.now());
+
+        POWER_STATS_REPOSITORY.add(powerStatsToBeUpdated);
         return 1;
     }
 
     @Override
-    public int delete(UUID uuid) {
-        POWER_STATS_REPOSITORY = POWER_STATS_REPOSITORY.stream()
-                .filter(powerStats -> !powerStats.getId().equals(uuid))
-                .collect(Collectors.toList());
+    public int delete(UUID id) {
+        PowerStats powerStatsToBeDeleted = POWER_STATS_REPOSITORY.stream()
+                .filter(powerStats-> powerStats.getId().equals(id))
+                .findFirst().get();
+        POWER_STATS_REPOSITORY.remove(powerStatsToBeDeleted);
         return 1;
     }
 
     @Override
     public void deleteAll() {
-
+        POWER_STATS_REPOSITORY.clear();
     }
 
     private static PowerStats powerStats(UUID id){

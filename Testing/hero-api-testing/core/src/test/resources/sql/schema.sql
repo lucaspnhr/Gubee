@@ -1,8 +1,9 @@
-CREATE schema  interview_service;
+CREATE schema  interview_service_test;
+
 
 CREATE TABLE power_stats
 (
-    id           UUID DEFAULT random_uuid()  PRIMARY KEY,
+    id           UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4() ,
     strength_    SMALLINT         NOT NULL,
     agility      SMALLINT         NOT NULL,
     dexterity    SMALLINT         NOT NULL,
@@ -13,7 +14,7 @@ CREATE TABLE power_stats
 
 CREATE TABLE hero
 (
-    id             UUID DEFAULT random_uuid() PRIMARY KEY ,
+    id           UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4() ,
     name           VARCHAR(255)     NOT NULL UNIQUE,
     race           VARCHAR(255)     NOT NULL,
     power_stats_id UUID             NOT NULL,

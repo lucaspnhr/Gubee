@@ -25,12 +25,13 @@ public class PowerStatsRepositoryImpl implements BaseRepository<PowerStats, UUID
             " SET strength = :strength, agility = :agility, dexterity = :dexterity, intelligence = :intelligence, updated_at = now()" +
             " WHERE id = :id";
     private static final String RETRIVE_POWER_STATS_BY_ID_QUERY = "SELECT * FROM power_stats WHERE id = :id";
-    public static final String DELETE_POWER_STATS_BY_ID = "DELETE FROM power_stats WHERE id = :id RETURNING id";
+    public static final String DELETE_POWER_STATS_BY_ID = "DELETE FROM power_stats WHERE id = :id";
     public static final String DELETE_ALL = "DELETE FROM power_stats";
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public UUID create(PowerStats powerStats) {
+
         return namedParameterJdbcTemplate.queryForObject(
             CREATE_POWER_STATS_QUERY,
             new BeanPropertySqlParameterSource(powerStats),
