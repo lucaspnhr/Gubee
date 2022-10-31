@@ -1,5 +1,6 @@
-package br.com.gubee.interview.core.features.hero;
+package br.com.gubee.interview.core.features.hero.controller;
 
+import br.com.gubee.interview.core.features.hero.service.HeroService;
 import br.com.gubee.interview.model.request.BattleHeroRequest;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import br.com.gubee.interview.model.request.RetrieveHeroRequest;

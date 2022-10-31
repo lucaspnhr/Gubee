@@ -1,8 +1,9 @@
-package br.com.gubee.interview.core.features.hero;
+package br.com.gubee.interview.core.features.hero.service;
 
 import br.com.gubee.interview.core.exception.customException.HeroAlredyExistsException;
 import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
-import br.com.gubee.interview.core.features.powerstats.PowerStatsService;
+import br.com.gubee.interview.core.features.hero.repository.HeroRepository;
+import br.com.gubee.interview.core.features.powerstats.service.PowerStatsService;
 import br.com.gubee.interview.model.Hero;
 import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.request.CreateHeroRequest;

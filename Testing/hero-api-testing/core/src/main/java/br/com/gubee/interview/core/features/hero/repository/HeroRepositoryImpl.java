@@ -1,4 +1,4 @@
-package br.com.gubee.interview.core.features.hero;
+package br.com.gubee.interview.core.features.hero.repository;
 
 import br.com.gubee.interview.model.Hero;
 import lombok.RequiredArgsConstructor;

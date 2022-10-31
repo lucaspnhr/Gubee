@@ -1,5 +1,6 @@
-package br.com.gubee.interview.core.features.hero;
+package br.com.gubee.interview.core.features.hero.repository;
 
+import br.com.gubee.interview.core.features.hero.repository.HeroRepository;
 import br.com.gubee.interview.model.Hero;
 import br.com.gubee.interview.model.enums.Race;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +22,10 @@ public class HeroRepositoryStubImpl implements HeroRepository {
 
     public HeroRepositoryStubImpl() {
 
-        this.HERO_STORAGE.add(hero(AQUAMEN_ID, "Aquamen", POWER_STATS_AQUAMEN_ID));
-        this.HERO_STORAGE.add(hero(LANTERNA_VERDE_ID, "Lanterna Vermelha", POWER_STATS_LANTERNA_VERMELHA_ID));
-        this.HERO_STORAGE.add(hero(LANTERNA_VERMELHA_ID, "Lanterna Verde", POWER_STATS_LANTERNA_VERDE_ID));
-        this.HERO_STORAGE.add(hero(BATMAN_ID, "Batman", POWER_STATS_BATMAN_ID));
+        this.HERO_STORAGE.add(hero(HeroIds.AQUAMEN_ID, "Aquamen", PowerStatsIdsByHero.POWER_STATS_AQUAMEN_ID));
+        this.HERO_STORAGE.add(hero(HeroIds.LANTERNA_VERDE_ID, "Lanterna Vermelha", PowerStatsIdsByHero.POWER_STATS_LANTERNA_VERMELHA_ID));
+        this.HERO_STORAGE.add(hero(HeroIds.LANTERNA_VERMELHA_ID, "Lanterna Verde", PowerStatsIdsByHero.POWER_STATS_LANTERNA_VERDE_ID));
+        this.HERO_STORAGE.add(hero(HeroIds.BATMAN_ID, "Batman", PowerStatsIdsByHero.POWER_STATS_BATMAN_ID));
 
     }
 

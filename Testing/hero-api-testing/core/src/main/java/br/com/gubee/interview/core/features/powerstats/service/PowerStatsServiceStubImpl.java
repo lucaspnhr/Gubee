@@ -1,12 +1,14 @@
-package br.com.gubee.interview.core.features.powerstats;
+package br.com.gubee.interview.core.features.powerstats.service;
 
+import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
+import br.com.gubee.interview.core.features.powerstats.service.PowerStatsService;
 import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 @AllArgsConstructor
-public class PowerStatsServiceStubImpl implements PowerStatsService{
+public class PowerStatsServiceStubImpl implements PowerStatsService {
 
 
     private final PowerStatsRepository powerStatsRepository;

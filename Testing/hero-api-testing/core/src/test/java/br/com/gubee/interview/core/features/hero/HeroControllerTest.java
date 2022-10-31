@@ -1,6 +1,8 @@
 package br.com.gubee.interview.core.features.hero;
 
 import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
+import br.com.gubee.interview.core.features.hero.controller.HeroController;
+import br.com.gubee.interview.core.features.hero.service.HeroServiceImpl;
 import br.com.gubee.interview.model.enums.Race;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import br.com.gubee.interview.model.request.RetrieveHeroRequest;
@@ -14,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -87,6 +90,15 @@ class HeroControllerTest {
         resultActions.andExpect(status().isNotFound()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @Test
+    void returnAListHeroRequestInBody() throws Exception {
+        //given
+        when(heroServiceImpl.retriveByName(any())).thenReturn(List.of(RetrieveHeroRequest.builder().id(UUID.randomUUID()).build()));
+        //when
+        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/filter?name=batman"));
+        //then
+        resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
 
 
     private CreateHeroRequest createHeroRequest() {

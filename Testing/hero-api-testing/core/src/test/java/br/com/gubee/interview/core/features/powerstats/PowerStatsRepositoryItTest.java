@@ -1,5 +1,7 @@
 package br.com.gubee.interview.core.features.powerstats;
 
+import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
+import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepositoryImpl;
 import br.com.gubee.interview.model.PowerStats;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,27 +1,24 @@
 package br.com.gubee.interview.core.features.hero;
 
-import br.com.gubee.interview.core.features.powerstats.PowerStatsRepository;
-import br.com.gubee.interview.core.features.powerstats.PowerStatsRepositoryImpl;
+import br.com.gubee.interview.core.features.hero.repository.HeroRepository;
+import br.com.gubee.interview.core.features.hero.repository.HeroRepositoryImpl;
+import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
+import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepositoryImpl;
 import br.com.gubee.interview.model.Hero;
 import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.enums.Race;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Stream;
 
-import static br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero.POWER_STATS_BATMAN_ID;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest

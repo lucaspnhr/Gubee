@@ -1,4 +1,4 @@
-package br.com.gubee.interview.core.features.powerstats;
+package br.com.gubee.interview.core.features.powerstats.service;
 
 import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;

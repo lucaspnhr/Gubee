@@ -1,11 +1,10 @@
-package br.com.gubee.interview.core.features.powerstats;
+package br.com.gubee.interview.core.features.powerstats.repository;
 
-import br.com.gubee.interview.model.Hero;
+import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
 import br.com.gubee.interview.model.PowerStats;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero.*;
 import static br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero.POWER_STATS_BATMAN_ID;
@@ -15,10 +14,10 @@ public class PowerStatsRepositoryStubImpl implements PowerStatsRepository {
     private List<PowerStats> POWER_STATS_REPOSITORY = new ArrayList<>();
 
     public PowerStatsRepositoryStubImpl() {
-        this.POWER_STATS_REPOSITORY.add(powerStats(POWER_STATS_AQUAMEN_ID));
-        this.POWER_STATS_REPOSITORY.add(powerStats(POWER_STATS_LANTERNA_VERMELHA_ID));
-        this.POWER_STATS_REPOSITORY.add(powerStats(POWER_STATS_LANTERNA_VERDE_ID));
-        this.POWER_STATS_REPOSITORY.add(powerStats(POWER_STATS_BATMAN_ID));
+        this.POWER_STATS_REPOSITORY.add(powerStats(PowerStatsIdsByHero.POWER_STATS_AQUAMEN_ID));
+        this.POWER_STATS_REPOSITORY.add(powerStats(PowerStatsIdsByHero.POWER_STATS_LANTERNA_VERMELHA_ID));
+        this.POWER_STATS_REPOSITORY.add(powerStats(PowerStatsIdsByHero.POWER_STATS_LANTERNA_VERDE_ID));
+        this.POWER_STATS_REPOSITORY.add(powerStats(PowerStatsIdsByHero.POWER_STATS_BATMAN_ID));
     }
 
     @Override
