@@ -1,11 +1,11 @@
-package br.com.gubee.interview.core.features.hero;
+package br.com.gubee.interview.core.features.hero.controller;
 
 import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
-import br.com.gubee.interview.core.features.hero.controller.HeroController;
-import br.com.gubee.interview.core.features.hero.service.HeroServiceImpl;
+import br.com.gubee.interview.core.features.hero.service.HeroService;
 import br.com.gubee.interview.model.enums.Race;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import br.com.gubee.interview.model.request.RetrieveHeroRequest;
+import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,12 +21,11 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(HeroController.class)
-class HeroControllerTest {
+class HeroControllerRestTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,11 +33,11 @@ class HeroControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private HeroServiceImpl heroServiceImpl;
+    private HeroService heroService;
 
     @BeforeEach
     public void initTest() {
-        when(heroServiceImpl.create(any())).thenReturn(UUID.randomUUID());
+        when(heroService.create(any())).thenReturn(UUID.randomUUID());
     }
 
     @Test
@@ -53,7 +52,7 @@ class HeroControllerTest {
 
         //then
         resultActions.andExpect(status().isCreated()).andExpect(header().exists("Location"));
-        verify(heroServiceImpl, times(1)).create(any());
+        verify(heroService, times(1)).create(any());
     }
 
     @Test
@@ -74,18 +73,19 @@ class HeroControllerTest {
     @Test
     void returnRetrieveHeroRequestInBody() throws Exception {
         //given
-        when(heroServiceImpl.retriveById(any())).thenReturn(RetrieveHeroRequest.builder().id(UUID.randomUUID()).build());
+        when(heroService.retriveById(any())).thenReturn(RetrieveHeroRequest.builder().id(UUID.randomUUID()).build());
         //when
-        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/"+UUID.randomUUID()));
+        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/" + UUID.randomUUID()));
         //then
         resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
     @Test
     void whenHeroNotFoundRespondWithNotFound() throws Exception {
         //given
-        when(heroServiceImpl.retriveById(any())).thenThrow(new NotFoundHeroException(UUID.randomUUID()));
+        when(heroService.retriveById(any())).thenThrow(new NotFoundHeroException(UUID.randomUUID()));
         //when
-        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/"+UUID.randomUUID()));
+        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/" + UUID.randomUUID()));
         //then
         resultActions.andExpect(status().isNotFound()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -93,13 +93,57 @@ class HeroControllerTest {
     @Test
     void returnAListHeroRequestInBody() throws Exception {
         //given
-        when(heroServiceImpl.retriveByName(any())).thenReturn(List.of(RetrieveHeroRequest.builder().id(UUID.randomUUID()).build()));
+        when(heroService.retriveByName(any())).thenReturn(List.of(RetrieveHeroRequest.builder().id(UUID.randomUUID()).build()));
         //when
         final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/filter?name=batman"));
         //then
         resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @Test
+    void returnObjectToCompareHeroes() throws Exception {
+        //given
+        when(heroService.retriveHerosByIds(any(UUID.class), any(UUID.class)))
+                .thenReturn(List.of(RetrieveHeroRequest.builder().id(UUID.randomUUID()).name("fakeHero").build(),
+                        RetrieveHeroRequest.builder().id(UUID.randomUUID()).name("fakeHero").build()));
+        //when
+        final ResultActions resultActions = mockMvc.perform(get(String.format("/api/v1/heroes/battle?firstHero=%s&secondHero=%s", UUID.randomUUID(), UUID.randomUUID())));
+        //then
+        resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void updateHeroAndReturnsIt() throws Exception {
+        //given
+        final String body = objectMapper.writeValueAsString(getUpdateHeroRequest());
+        when(heroService.update(any(UUID.class), any(UpdateHeroRequest.class)))
+                .thenReturn(RetrieveHeroRequest.builder().id(UUID.randomUUID()).build());
+        //when
+        final ResultActions resultActions = mockMvc.perform(put(String.format("/api/v1/heroes/%s", UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body));
+        //then
+        resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void deleteHeroPassingItsId() throws Exception {
+        //given
+        doNothing().when(heroService).deleteById(any());
+        //when
+        final ResultActions resultActions = mockMvc.perform(delete(String.format("/api/v1/heroes/%s", UUID.randomUUID())));
+        //then
+        resultActions.andExpect(status().isNoContent());
+    }
+
+    private static UpdateHeroRequest getUpdateHeroRequest() {
+        return UpdateHeroRequest.builder()
+                .name("Aquaman")
+                .agility(4)
+                .strength(5)
+                .dexterity(3)
+                .intelligence(8).build();
+    }
 
     private CreateHeroRequest createHeroRequest() {
         return CreateHeroRequest.builder()

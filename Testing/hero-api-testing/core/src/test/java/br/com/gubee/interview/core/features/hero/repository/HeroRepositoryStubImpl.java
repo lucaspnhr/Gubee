@@ -1,6 +1,8 @@
 package br.com.gubee.interview.core.features.hero.repository;
 
 import br.com.gubee.interview.core.features.hero.repository.HeroRepository;
+import br.com.gubee.interview.core.features.util.constants.HeroIds;
+import br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero;
 import br.com.gubee.interview.model.Hero;
 import br.com.gubee.interview.model.enums.Race;
 import lombok.extern.slf4j.Slf4j;

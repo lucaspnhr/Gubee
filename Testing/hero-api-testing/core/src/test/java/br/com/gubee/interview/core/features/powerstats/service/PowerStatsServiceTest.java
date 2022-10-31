@@ -1,4 +1,4 @@
-package br.com.gubee.interview.core.features.powerstats;
+package br.com.gubee.interview.core.features.powerstats.service;
 
 import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepositoryStubImpl;
 import br.com.gubee.interview.core.features.powerstats.service.PowerStatsService;

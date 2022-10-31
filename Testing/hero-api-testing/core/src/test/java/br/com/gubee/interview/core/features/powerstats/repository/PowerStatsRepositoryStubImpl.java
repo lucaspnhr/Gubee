@@ -1,13 +1,10 @@
 package br.com.gubee.interview.core.features.powerstats.repository;
 
-import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
+import br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero;
 import br.com.gubee.interview.model.PowerStats;
 
 import java.time.Instant;
 import java.util.*;
-
-import static br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero.*;
-import static br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero.POWER_STATS_BATMAN_ID;
 
 public class PowerStatsRepositoryStubImpl implements PowerStatsRepository {
 
