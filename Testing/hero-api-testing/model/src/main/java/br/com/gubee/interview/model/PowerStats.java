@@ -1,6 +1,7 @@
 package br.com.gubee.interview.model;
 
 import br.com.gubee.interview.model.request.CreateHeroRequest;
+import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,5 +31,17 @@ public class PowerStats {
         this.agility = createHeroRequest.getAgility();
         this.dexterity = createHeroRequest.getDexterity();
         this.intelligence = createHeroRequest.getIntelligence();
+    }
+
+    public void convergeUpdates(UpdateHeroRequest updateHeroRequest) {
+        if (updateHeroRequest.getDexterity() >= 0){
+            this.setDexterity(updateHeroRequest.getDexterity());
+        }else if(updateHeroRequest.getStrength() >= 0){
+            this.setStrength(updateHeroRequest.getStrength());
+        } else if (updateHeroRequest.getIntelligence() >= 0) {
+            this.setIntelligence(updateHeroRequest.getIntelligence());
+        } else if (updateHeroRequest.getAgility() >= 0) {
+            this.setAgility(updateHeroRequest.getAgility());
+        }
     }
 }

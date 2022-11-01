@@ -1,5 +1,7 @@
 package br.com.gubee.interview.model.request;
 
+import br.com.gubee.interview.model.Hero;
+import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.enums.Race;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +24,15 @@ public class RetrieveHeroRequest {
     private int dexterity;
     private int intelligence;
 
+    public RetrieveHeroRequest(Hero hero, PowerStats powerStats){
+        this.setId(hero.getId());
+        this.setName(hero.getName());
+        this.setRace(hero.getRace());
+        this.setStrength(powerStats.getStrength());
+        this.setAgility(powerStats.getAgility());
+        this.setDexterity(powerStats.getDexterity());
+        this.setIntelligence(powerStats.getIntelligence());
+    }
 
     @Override
     public boolean equals(Object o) {

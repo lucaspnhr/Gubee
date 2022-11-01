@@ -27,17 +27,24 @@ public class UpdateHeroRequest {
 
     @Min(value = 0, message = "message.powerstats.strength.min")
     @Max(value = 10, message = "message.powerstats.strength.max")
-    private Integer strength;
+    private int strength = -1;
 
     @Min(value = 0, message = "message.powerstats.agility.min")
     @Max(value = 10, message = "message.powerstats.agility.max")
-    private Integer agility;
+    private int agility = -1;
 
     @Min(value = 0, message = "message.powerstats.dexterity.min")
     @Max(value = 10, message = "message.powerstats.dexterity.max")
-    private Integer dexterity;
+    private int dexterity = -1;
 
     @Min(value = 0, message = "message.powerstats.intelligence.min")
     @Max(value = 10, message = "message.powerstats.intelligence.max")
-    private Integer intelligence;
+    private int intelligence = -1;
+
+    public boolean hasAllStatsDefault(){
+        return this.getDexterity() < 0 &&
+                this.getStrength() < 0 &&
+                this.getIntelligence() < 0 &&
+                this.getAgility() < 0;
+    }
 }

@@ -2,6 +2,7 @@ package br.com.gubee.interview.model;
 
 import br.com.gubee.interview.model.enums.Race;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
+import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.UUID;
-
-import static lombok.AccessLevel.PRIVATE;
 
 @Data
 @Builder
@@ -30,5 +29,13 @@ public class Hero {
         this.name = createHeroRequest.getName();
         this.race = createHeroRequest.getRace();
         this.powerStatsId = powerStatsId;
+    }
+
+    public void convergeUpdate(UpdateHeroRequest updateHeroRequest) {
+        if(updateHeroRequest.getName().isEmpty() || updateHeroRequest.getName() == null){
+            this.setName(updateHeroRequest.getName());
+        }else if(updateHeroRequest.getRace() == null){
+            this.setRace(updateHeroRequest.getRace());
+        }
     }
 }

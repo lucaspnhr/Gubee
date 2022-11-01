@@ -44,7 +44,7 @@ public class HeroServiceImpl implements HeroService {
     public RetrieveHeroRequest retriveById(UUID id){
         Hero retrivedHero = (heroRepository.retriveById(id))
                 .orElseThrow(()-> new NotFoundHeroException(id));
-        return createRetriveHero(retrivedHero);
+        return new RetrieveHeroRequest(retrivedHero, retrieveItsPowerStats(retrivedHero));
     }
     @Override
     @Transactional
@@ -54,7 +54,7 @@ public class HeroServiceImpl implements HeroService {
         }
         List<Hero> retrivedHeros = heroRepository.retriveByName(name);
         return retrivedHeros.stream()
-                .map(this::createRetriveHero)
+                .map((hero) -> new RetrieveHeroRequest(hero, retrieveItsPowerStats(hero)))
                 .collect(Collectors.toList());
     }
 
@@ -64,11 +64,13 @@ public class HeroServiceImpl implements HeroService {
         Hero oldHero = heroRepository.retriveById(id)
                 .orElseThrow(() -> new NotFoundHeroException(id));
         powerStatsService.update(updateHeroRequest, oldHero.getPowerStatsId());
-        Hero heroUpdated = updateHeroRequestToHero(updateHeroRequest, oldHero);
-        int updateReturn = heroRepository.update(heroUpdated);
+        oldHero.convergeUpdate(updateHeroRequest);
+        int updateReturn = heroRepository.update(oldHero);
+        //TODO maybe throw a custom exception here
         return updateReturn > 0 ?
-                createRetriveHero(heroUpdated)
-                : createRetriveHero(oldHero);
+                new RetrieveHeroRequest(oldHero, retrieveItsPowerStats(oldHero)) :
+                new RetrieveHeroRequest();
+
     }
 
     @Override
@@ -84,34 +86,10 @@ public class HeroServiceImpl implements HeroService {
     public List<RetrieveHeroRequest> retriveHerosByIds(UUID firstHero, UUID secondHero) {
         Hero firstRetrivedHero = (heroRepository.retriveById(firstHero)).orElseThrow(()-> new NotFoundHeroException(firstHero));
         Hero secondRetrivedHero = (heroRepository.retriveById(secondHero)).orElseThrow(()-> new NotFoundHeroException(secondHero));
-        return List.of(createRetriveHero(firstRetrivedHero),createRetriveHero(secondRetrivedHero));
+        return List.of(new RetrieveHeroRequest(firstRetrivedHero, retrieveItsPowerStats(firstRetrivedHero)),
+                new RetrieveHeroRequest(secondRetrivedHero, retrieveItsPowerStats(secondRetrivedHero)));
     }
-    private RetrieveHeroRequest createRetriveHero(Hero hero) {
-        PowerStats powerStats = powerStatsService.retriveById(hero.getPowerStatsId());
-        return RetrieveHeroRequest.builder()
-                .id(hero.getId())
-                .name(hero.getName())
-                .race(hero.getRace())
-                .strength(powerStats.getStrength())
-                .agility(powerStats.getAgility())
-                .dexterity(powerStats.getDexterity())
-                .intelligence(powerStats.getIntelligence()).build();
+    private PowerStats retrieveItsPowerStats(Hero hero) {
+        return powerStatsService.retriveById(hero.getPowerStatsId());
     }
-
-    private Hero updateHeroRequestToHero(UpdateHeroRequest updateHeroRequest, Hero oldHero) {
-        if(updateHeroRequest.getName().isEmpty() || updateHeroRequest.getName() == null){
-            updateHeroRequest.setName(oldHero.getName());
-        }else if(updateHeroRequest.getRace() == null){
-            updateHeroRequest.setRace(oldHero.getRace());
-        }
-        return Hero.builder()
-                .id(oldHero.getId())
-                .name(updateHeroRequest.getName())
-                .race(updateHeroRequest.getRace())
-                .powerStatsId(oldHero.getPowerStatsId())
-                .build();
-    }
-
-
-
 }
