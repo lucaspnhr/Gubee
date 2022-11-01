@@ -89,6 +89,14 @@ public class HeroServiceImpl implements HeroService {
         return List.of(new RetrieveHeroRequest(firstRetrivedHero, retrieveItsPowerStats(firstRetrivedHero)),
                 new RetrieveHeroRequest(secondRetrivedHero, retrieveItsPowerStats(secondRetrivedHero)));
     }
+
+    @Override
+    @Transactional
+    public void deleteAll() {
+        powerStatsService.deleteAll();
+        heroRepository.deleteAll();
+    }
+
     private PowerStats retrieveItsPowerStats(Hero hero) {
         return powerStatsService.retriveById(hero.getPowerStatsId());
     }

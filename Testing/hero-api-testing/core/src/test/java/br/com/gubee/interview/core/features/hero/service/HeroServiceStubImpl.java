@@ -57,6 +57,11 @@ public class HeroServiceStubImpl implements HeroService {
         return List.of(getRetrieveHeroRequest(firstHero),getRetrieveHeroRequest(secondHero));
     }
 
+    @Override
+    public void deleteAll() {
+        heroRepository.deleteAll();
+    }
+
     private static RetrieveHeroRequest getRetrieveHeroRequest(Hero hero) {
         return RetrieveHeroRequest.builder()
                 .id(hero.getId())

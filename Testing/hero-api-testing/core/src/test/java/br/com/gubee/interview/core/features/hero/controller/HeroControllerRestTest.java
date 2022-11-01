@@ -56,7 +56,7 @@ class HeroControllerRestTest {
     }
 
     @Test
-    void throwsExceptionIfHasInvalidArgument() throws Exception {
+    void shouldReturnBadRequestIfHasInvalidArgument() throws Exception {
         //when
         final var createHeroRequest = createHeroRequest();
         createHeroRequest.setName("");

@@ -7,15 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 public interface PowerStatsService {
-    @Transactional
+
     UUID create(PowerStats powerStats);
 
-    @Transactional
+
     PowerStats retriveById(UUID id);
 
-    @Transactional
+
     int update(UpdateHeroRequest updateHeroRequest, UUID powerStatsId);
 
-    @Transactional
     int deleteById(UUID powerStatsId);
+
+    void deleteAll();
 }

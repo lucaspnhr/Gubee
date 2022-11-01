@@ -43,4 +43,9 @@ public class PowerStatsServiceImpl implements PowerStatsService {
     public int deleteById(UUID powerStatsId) {
         return powerStatsRepository.delete(powerStatsId);
     }
+
+    @Override
+    public void deleteAll() {
+        powerStatsRepository.deleteAll();
+    }
 }

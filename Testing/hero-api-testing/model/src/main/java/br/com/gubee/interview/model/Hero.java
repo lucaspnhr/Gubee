@@ -32,9 +32,9 @@ public class Hero {
     }
 
     public void convergeUpdate(UpdateHeroRequest updateHeroRequest) {
-        if(updateHeroRequest.getName().isEmpty() || updateHeroRequest.getName() == null){
+        if(!updateHeroRequest.getName().isEmpty() || updateHeroRequest.getName() != null){
             this.setName(updateHeroRequest.getName());
-        }else if(updateHeroRequest.getRace() == null){
+        }else if(updateHeroRequest.getRace() != null){
             this.setRace(updateHeroRequest.getRace());
         }
     }
