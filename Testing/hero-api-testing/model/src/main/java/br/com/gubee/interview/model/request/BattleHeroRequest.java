@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Data
 @NoArgsConstructor(access = PRIVATE)
 public class BattleHeroRequest {
-    private Map<String, UUID> heros = new HashMap<>();
+    private Map<String, UUID> heroes = new HashMap<>();
 
     private int strength;
     private int agility;
@@ -21,8 +21,8 @@ public class BattleHeroRequest {
 
     public BattleHeroRequest(RetrieveHeroRequest firstHero,
                              RetrieveHeroRequest secondHero ) {
-        heros.put(firstHero.getName(), firstHero.getId());
-        heros.put(secondHero.getName(), secondHero.getId());
+        heroes.put(firstHero.getName(), firstHero.getId());
+        heroes.put(secondHero.getName(), secondHero.getId());
         this.strength = firstHero.getStrength() - secondHero.getStrength();
         this.agility = firstHero.getAgility() - secondHero.getAgility();
         this.dexterity = firstHero.getDexterity() - secondHero.getDexterity();

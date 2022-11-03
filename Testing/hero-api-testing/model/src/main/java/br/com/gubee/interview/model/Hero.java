@@ -31,7 +31,7 @@ public class Hero {
         this.powerStatsId = powerStatsId;
     }
 
-    public void convergeUpdate(UpdateHeroRequest updateHeroRequest) {
+    public void update(UpdateHeroRequest updateHeroRequest) {
         if(!updateHeroRequest.getName().isEmpty() || updateHeroRequest.getName() != null){
             this.setName(updateHeroRequest.getName());
         }else if(updateHeroRequest.getRace() != null){

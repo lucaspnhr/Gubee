@@ -1,7 +1,6 @@
 package br.com.gubee.interview.core.features.powerstats.service;
 
 import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
-import br.com.gubee.interview.core.features.powerstats.service.PowerStatsService;
 import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ public class PowerStatsServiceStubImpl implements PowerStatsService {
         }
 
         PowerStats powerStats = retriveById(powerStatsId);
-        powerStats.convergeUpdates(updateHeroRequest);
+        powerStats.update(updateHeroRequest);
         powerStatsRepository.update(powerStats);
         return 1;
     }

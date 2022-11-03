@@ -1,7 +1,5 @@
 package br.com.gubee.interview.core.features.hero.repository;
 
-import br.com.gubee.interview.core.features.hero.repository.HeroRepository;
-import br.com.gubee.interview.core.features.hero.repository.HeroRepositoryImpl;
 import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
 import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepositoryImpl;
 import br.com.gubee.interview.model.Hero;
@@ -80,18 +78,18 @@ class HeroRepositoryItTest {
     void shouldReturnListOfHerosThatContainsNameValue() {
         Hero heroToSave = getHero();
         heroRepository.create(heroToSave);
-        List<Hero> herosFromDb = heroRepository.retriveByName("man");
+        List<Hero> heroesFromDb = heroRepository.retriveByName("man");
 
-        assertThat(herosFromDb.isEmpty()).isFalse();
+        assertThat(heroesFromDb.isEmpty()).isFalse();
     }
 
 
 
     @Test
     void shouldReturnEmptyListWhenNoHeroThatNameContainsNameValue() {
-        List<Hero> herosFromDb = heroRepository.retriveByName("man");
+        List<Hero> heroesFromDb = heroRepository.retriveByName("man");
 
-        assertThat(herosFromDb.isEmpty()).isTrue();
+        assertThat(heroesFromDb.isEmpty()).isTrue();
     }
 
     @Test

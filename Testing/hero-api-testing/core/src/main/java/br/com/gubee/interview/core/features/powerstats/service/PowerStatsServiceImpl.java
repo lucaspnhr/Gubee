@@ -35,7 +35,7 @@ public class PowerStatsServiceImpl implements PowerStatsService {
             return 0;
         }
         PowerStats powerStats = retriveById(powerStatsId);
-        powerStats.convergeUpdates(updateHeroRequest);
+        powerStats.update(updateHeroRequest);
         return powerStatsRepository.update(powerStats);
     }
     @Override

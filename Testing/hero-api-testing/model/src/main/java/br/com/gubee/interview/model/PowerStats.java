@@ -33,14 +33,17 @@ public class PowerStats {
         this.intelligence = createHeroRequest.getIntelligence();
     }
 
-    public void convergeUpdates(UpdateHeroRequest updateHeroRequest) {
+    public void update(UpdateHeroRequest updateHeroRequest) {
         if (updateHeroRequest.getDexterity() >= 0){
             this.setDexterity(updateHeroRequest.getDexterity());
-        }else if(updateHeroRequest.getStrength() >= 0){
+        }
+        if(updateHeroRequest.getStrength() >= 0){
             this.setStrength(updateHeroRequest.getStrength());
-        } else if (updateHeroRequest.getIntelligence() >= 0) {
+        }
+        if (updateHeroRequest.getIntelligence() >= 0) {
             this.setIntelligence(updateHeroRequest.getIntelligence());
-        } else if (updateHeroRequest.getAgility() >= 0) {
+        }
+        if (updateHeroRequest.getAgility() >= 0) {
             this.setAgility(updateHeroRequest.getAgility());
         }
     }

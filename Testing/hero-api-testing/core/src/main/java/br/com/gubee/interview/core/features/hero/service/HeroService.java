@@ -3,7 +3,6 @@ package br.com.gubee.interview.core.features.hero.service;
 import br.com.gubee.interview.model.request.CreateHeroRequest;
 import br.com.gubee.interview.model.request.RetrieveHeroRequest;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;

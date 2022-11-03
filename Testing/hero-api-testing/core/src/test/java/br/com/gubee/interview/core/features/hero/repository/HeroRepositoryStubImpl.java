@@ -1,6 +1,5 @@
 package br.com.gubee.interview.core.features.hero.repository;
 
-import br.com.gubee.interview.core.features.hero.repository.HeroRepository;
 import br.com.gubee.interview.core.features.util.constants.HeroIds;
 import br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero;
 import br.com.gubee.interview.model.Hero;
@@ -8,14 +7,8 @@ import br.com.gubee.interview.model.enums.Race;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import static br.com.gubee.interview.core.features.util.constants.HeroIds.*;
-import static br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero.*;
 
 @Slf4j
 public class HeroRepositoryStubImpl implements HeroRepository {
@@ -76,6 +69,13 @@ public class HeroRepositoryStubImpl implements HeroRepository {
 
     @Override
     public List<Hero> retriveByName(String name) {
+        long quantityFound = HERO_STORAGE.stream()
+                .filter(hero -> hero.getName().toLowerCase().contains(name.toLowerCase()))
+                .count();
+        if(quantityFound <= 0){
+            return Collections.emptyList();
+        }
+
         return HERO_STORAGE.stream()
                 .filter(hero -> hero.getName().toLowerCase().contains(name.toLowerCase()))
                 .map(hero ->

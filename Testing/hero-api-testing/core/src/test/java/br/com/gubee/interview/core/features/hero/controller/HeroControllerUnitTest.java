@@ -16,7 +16,6 @@ import java.util.List;
 
 import static br.com.gubee.interview.core.features.util.constants.HeroIds.AQUAMEN_ID;
 import static br.com.gubee.interview.core.features.util.constants.HeroIds.BATMAN_ID;
-import static java.lang.String.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
@@ -41,6 +40,7 @@ public class HeroControllerUnitTest {
         ResponseEntity<String> returnResponseEntity = heroController.create(createHeroRequest);
         //then
         assertThat(returnResponseEntity.getHeaders().containsKey("Location")).isTrue();
+        assertThat(returnResponseEntity.getHeaders().get("Location").isEmpty()).isFalse();
         assertThat(returnResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
@@ -52,6 +52,7 @@ public class HeroControllerUnitTest {
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isInstanceOf(RetrieveHeroRequest.class);
+        assertThat(responseEntity.getBody()).hasNoNullFieldsOrProperties();
     }
 
     @Test
@@ -66,7 +67,18 @@ public class HeroControllerUnitTest {
         assertThat(responseEntity.getBody()).isNotNull();
         assertThat(responseEntity.getBody().isEmpty()).isFalse();
     }
-
+    @Test
+    void returnEmptyListWhenNoHeroWithNameQuery() {
+        //given
+        final var queryName = "elastico";
+        //when
+        ResponseEntity<List<RetrieveHeroRequest>> responseEntity = heroController.findHeroByName(queryName);
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isInstanceOf(List.class);
+        assertThat(responseEntity.getBody()).isNotNull();
+        assertThat(responseEntity.getBody().isEmpty()).isTrue();
+    }
     @Test
     void findTwoHerosAndReturnsABattleHeroRequestObject() {
         //given
@@ -75,6 +87,7 @@ public class HeroControllerUnitTest {
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isInstanceOf(BattleHeroRequest.class);
+        assertThat(responseEntity.getBody()).hasNoNullFieldsOrProperties();
     }
 
     @Test
@@ -86,6 +99,7 @@ public class HeroControllerUnitTest {
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isInstanceOf(RetrieveHeroRequest.class);
+        assertThat(responseEntity.getBody()).hasNoNullFieldsOrProperties();
     }
 
     @Test

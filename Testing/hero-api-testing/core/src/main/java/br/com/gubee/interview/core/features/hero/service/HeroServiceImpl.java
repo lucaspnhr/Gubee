@@ -64,7 +64,7 @@ public class HeroServiceImpl implements HeroService {
         Hero oldHero = heroRepository.retriveById(id)
                 .orElseThrow(() -> new NotFoundHeroException(id));
         powerStatsService.update(updateHeroRequest, oldHero.getPowerStatsId());
-        oldHero.convergeUpdate(updateHeroRequest);
+        oldHero.update(updateHeroRequest);
         int updateReturn = heroRepository.update(oldHero);
         //TODO maybe throw a custom exception here
         return updateReturn > 0 ?

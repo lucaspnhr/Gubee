@@ -2,7 +2,6 @@ package br.com.gubee.interview.core.features.powerstats.service;
 
 import br.com.gubee.interview.model.PowerStats;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 

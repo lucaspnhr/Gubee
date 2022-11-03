@@ -8,6 +8,7 @@ import br.com.gubee.interview.model.request.CreateHeroRequest;
 import br.com.gubee.interview.model.request.RetrieveHeroRequest;
 import br.com.gubee.interview.model.request.UpdateHeroRequest;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class HeroServiceStubImpl implements HeroService {
     @Override
     public List<RetrieveHeroRequest> retriveByName(String name) {
         List<Hero> heroes = heroRepository.retriveByName(name);
+        if (heroes.isEmpty()){return Collections.emptyList();}
         return heroes.stream().map(HeroServiceStubImpl::getRetrieveHeroRequest).collect(Collectors.toList());
 
     }
@@ -65,6 +67,7 @@ public class HeroServiceStubImpl implements HeroService {
     private static RetrieveHeroRequest getRetrieveHeroRequest(Hero hero) {
         return RetrieveHeroRequest.builder()
                 .id(hero.getId())
+                .name(hero.getName())
                 .race(hero.getRace())
                 .dexterity(5)
                 .intelligence(6)

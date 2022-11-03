@@ -15,14 +15,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.MultiValueMapAdapter;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -96,36 +99,59 @@ public class ControllerLayerItTest {
     void returnRetrieveHeroRequestInBody() throws Exception {
         //given
         //when
-        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/" + RED_LANTERN_ID));
+        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/{id}", RED_LANTERN_ID));
         //then
-        resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.name").value("Lanterna Vermelha"))
+                .andExpect(jsonPath("$.id").value(RED_LANTERN_ID.toString()));
     }
 
     @Test
     void whenHeroNotFoundRespondWithNotFound() throws Exception {
         //given
+        final var heroId = UUID.randomUUID();
         //when
-        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/" + UUID.randomUUID()));
+
+        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/{id}", heroId));
         //then
-        resultActions.andExpect(status().isNotFound()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(status().isNotFound())
+                .andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(containsString(heroId.toString())));
     }
 
     @Test
     void returnAListHeroRequestInBody() throws Exception {
         //given
         //when
-        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/filter?name=lan"));
+        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/filter").param("name", "lan"));
         //then
-        resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        resultActions
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.[0].name").value("Lanterna Vermelha"))
+                .andExpect(jsonPath("$.[1].name").value("Lanterna Verde"));
     }
 
     @Test
     void returnObjectToCompareHeroes() throws Exception {
         //given
+        MultiValueMap<String, String> params = new MultiValueMapAdapter<>(
+                Map.of("firstHero", List.of(RED_LANTERN_ID.toString()),
+                        "secondHero", List.of(GREEN_LANTERN_ID.toString()))
+        );
         //when
-        final ResultActions resultActions = mockMvc.perform(get(String.format("/api/v1/heroes/battle?firstHero=%s&secondHero=%s", RED_LANTERN_ID, GREEN_LANTERN_ID)));
+        final ResultActions resultActions = mockMvc.perform(get("/api/v1/heroes/battle").params(params));
         //then
-        resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        resultActions
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.heroes.['Lanterna Vermelha']").value(RED_LANTERN_ID.toString()))
+                .andExpect(jsonPath("$.heroes.['Lanterna Verde']").value(GREEN_LANTERN_ID.toString()));
     }
 
     @Test
@@ -133,17 +159,21 @@ public class ControllerLayerItTest {
         //given
         final String body = objectMapper.writeValueAsString(getUpdateHeroRequest());
         //when
-        final ResultActions resultActions = mockMvc.perform(put(String.format("/api/v1/heroes/%s", GREEN_LANTERN_ID))
+        final ResultActions resultActions = mockMvc.perform(put("/api/v1/heroes/{id}", GREEN_LANTERN_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body));
         //then
-        resultActions.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        resultActions
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.name").value("Lanterna-Verde"));
     }
 
     @Test
     void deleteHeroPassingItsId() throws Exception {
         //when
-        final ResultActions resultActions = mockMvc.perform(delete(String.format("/api/v1/heroes/%s", RED_LANTERN_ID)));
+        final ResultActions resultActions = mockMvc.perform(delete("/api/v1/heroes/{id}", RED_LANTERN_ID));
         //then
         resultActions.andExpect(status().isNoContent());
     }
