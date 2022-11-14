@@ -33,8 +33,31 @@ public class Hero extends Entity<HeroId> {
         Validate.notNull(race);
         this.name = name;
         this.race = race;
+        this.enabled = true;
         this.powerStats = powerStats;
-        this.createdAt = Instant.now();
+        this.createdAt = this.updatedAt = Instant.now();
+    }
+
+    public Hero(HeroId heroId,
+                String name,
+                Race race,
+                PowerStats powerStats,
+                boolean enabled,
+                Instant createdAt,
+                Instant updatedAt) {
+        super(heroId);
+        Validate.notEmpty(name);
+        Validate.notNull(race);
+        Validate.notNull(powerStats);
+        Validate.notNull(createdAt);
+        Validate.notNull(updatedAt);
+        Validate.isTrue(createdAt.isBefore(updatedAt) || createdAt.equals(updatedAt));
+        this.name = name;
+        this.race = race;
+        this.enabled = enabled;
+        this.powerStats = powerStats;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public void update(String name, Race race) {

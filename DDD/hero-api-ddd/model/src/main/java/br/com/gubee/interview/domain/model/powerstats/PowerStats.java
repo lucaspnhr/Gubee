@@ -25,11 +25,12 @@ public class PowerStats extends Entity<PowerStatsId> {
     private Instant createdAt;
     private Instant updatedAt;
 
-    public PowerStats(Strength strength,
+    public PowerStats(PowerStatsId powerStatsId,
+            Strength strength,
                       Agility agility,
                       Dexterity dexterity,
                       Intelligence intelligence) {
-        super(new PowerStatsId());
+        super(powerStatsId);
         Validate.notNull(strength);
         Validate.notNull(agility);
         Validate.notNull(dexterity);
@@ -38,8 +39,30 @@ public class PowerStats extends Entity<PowerStatsId> {
         this.agility = agility;
         this.dexterity = dexterity;
         this.intelligence = intelligence;
-        this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
+        this.createdAt = this.updatedAt = Instant.now();
+    }
+
+    public PowerStats(PowerStatsId powerStatsId,
+                      Strength strength,
+                      Agility agility,
+                      Dexterity dexterity,
+                      Intelligence intelligence,
+                      Instant createdAt,
+                      Instant updatedAt) {
+        super(powerStatsId);
+        Validate.notNull(strength);
+        Validate.notNull(agility);
+        Validate.notNull(dexterity);
+        Validate.notNull(intelligence);
+        Validate.notNull(createdAt);
+        Validate.notNull(updatedAt);
+        Validate.isTrue(createdAt.isBefore(updatedAt) || createdAt.equals(updatedAt));
+        this.strength = strength;
+        this.agility = agility;
+        this.dexterity = dexterity;
+        this.intelligence = intelligence;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public void update(Strength strength,

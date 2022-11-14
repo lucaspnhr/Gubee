@@ -24,11 +24,24 @@ public interface HeroRepository {
     List<Hero> findByName(String query);
 
     /**
-     * Save hero in storage
+     * Save hero in storage or update it if already in repository
      * @param hero entity
      * @return  HeroId
      * */
     HeroId save(Hero hero);
 
+    /**
+     * Delete hero from repository that matches given id
+     * @param heroId
+     * @return positive integer if hero succefully deleted or negative if not
+     */
+    int delete(HeroId heroId);
+
+    /**
+     *
+     * @param name id
+     * @return true if hero is present in repository or false if is not
+     */
+    boolean alreadyExists(String name);
 
 }

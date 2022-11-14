@@ -14,6 +14,10 @@ public class PowerStatsId implements ValueObject<PowerStatsId> {
         this.id = UUID.randomUUID();
     }
 
+    public PowerStatsId(UUID id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
