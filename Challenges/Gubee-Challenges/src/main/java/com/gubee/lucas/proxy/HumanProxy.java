@@ -1,5 +1,8 @@
 package com.gubee.lucas.proxy;
 
+import com.gubee.lucas.annotation.Transactional;
+
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,9 +18,17 @@ public class HumanProxy extends Human{
     }
 
     @Override
-    public void walk() {
+    public void walk()  {
         calls.merge("walk", 1, Integer::sum);
-        realHuman.walk();
+        try{
+            Method walk = realHuman.getClass().getDeclaredMethod("walk");
+            if (walk.isAnnotationPresent(Transactional.class)){
+                System.out.println("I am a trasactional method");
+            }
+            realHuman.walk();
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     @Override

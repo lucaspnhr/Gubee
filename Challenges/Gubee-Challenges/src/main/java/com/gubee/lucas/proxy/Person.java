@@ -1,5 +1,7 @@
 package com.gubee.lucas.proxy;
 
+import com.gubee.lucas.annotation.Transactional;
+
 import javax.xml.namespace.QName;
 
 public class Person extends Human{
@@ -9,6 +11,7 @@ public class Person extends Human{
         super(name, age);
     }
 
+    @Transactional
     @Override
     public void walk() {
         System.out.println("Im "+ getName() +" and Im Walking ...." +" and I am "+getAge());

@@ -23,8 +23,15 @@ public class Processor {
 
             if(declaredMethods.isAnnotationPresent(Transactional.class)){
                 System.out.printf("Iniciando execução do método $%s.%s %n",method.getName(), target.getClass().getSimpleName());
-                method.invoke(target, args);
-                System.out.printf("Finalizando execução do método $%s.%s %n",method.getName(),target.getClass().getSimpleName());
+                try{
+                    method.invoke(target, args);
+
+                    System.out.printf("Finalizando execução do método $%s.%s com sucesso %n",method.getName(),target.getClass().getSimpleName());
+                }catch (Exception e){
+                    System.out.printf("Finalizando execução do método $%s.%s com error %n",method.getName(),target.getClass().getSimpleName());
+                    System.out.println(e);
+                }
+
             }
 
             return proxy;
