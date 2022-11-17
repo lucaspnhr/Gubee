@@ -1,8 +1,6 @@
 package com.gubee.lucas.abstractfactory.shader;
 
 import com.gubee.lucas.abstractfactory.shader.concrete.geforceeitgh.GeforceEightFactory;
-import com.gubee.lucas.abstractfactory.shader.concrete.geforceeitgh.GeforceEitghPixelShader;
-import com.gubee.lucas.abstractfactory.shader.concrete.geforceeitgh.GeforceEitghVertexShader;
 import com.gubee.lucas.abstractfactory.shader.concrete.gfx.GFXFactory;
 import com.gubee.lucas.abstractfactory.shader.interfaces.ShaderFactory;
 
@@ -14,7 +12,7 @@ public final class ShaderManager {
         return videoCard.getShaderFactory();
     }
 
-    enum VideoCard{
+    public enum VideoCard{
         GEFORCE_EIGHT(new GeforceEightFactory()),
         GEFORCE_FX(new GFXFactory());
 

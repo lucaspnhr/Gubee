@@ -5,27 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81b28442-bc15-4516-8557-8862b25d4eaf" name="Changes" comment="Implementing annotation using java proxy and reflection">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/ShaderManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEightFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEitghPixelShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEitghVertexShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/gfx/GFXFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/gfx/GFXPixelShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/gfx/GFXVertexShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/interfaces/PixelShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/interfaces/ShaderFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/interfaces/VertexShader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/proxy/TestProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/annotation/abstractandproxy/PixelShaderProxy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/annotation/javaproxy/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/annotation/javaproxy/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/proxy/HumanProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/proxy/HumanProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/ShaderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/ShaderManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEitghPixelShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEitghPixelShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/annotation/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/annotation/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/proxy/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/proxy/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gubee/lucas/annotation/javaproxy/Processor$Handler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gubee/lucas/annotation/javaproxy/Processor$Handler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gubee/lucas/annotation/javaproxy/Processor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gubee/lucas/annotation/javaproxy/Processor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gubee/lucas/annotation/javaproxy/TestJavaProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gubee/lucas/annotation/javaproxy/TestJavaProxy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gubee/lucas/proxy/HumanProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gubee/lucas/proxy/HumanProxy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gubee/lucas/proxy/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gubee/lucas/proxy/Person.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +55,7 @@
       <recent name="E:\Gubee - Repo\Gubee\challenges\Gubee-Challenges\src\main\java\com\gubee\lucas\" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestShader">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.gubee.lucas.annotation.Main" />
       <module name="Gubee-Challenges" />
@@ -90,19 +75,6 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.gubee.lucas.abstractfactory.shader.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestJavaProxy" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.gubee.lucas.annotation.javaproxy.TestJavaProxy" />
-      <module name="Gubee-Challenges" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.gubee.lucas.annotation.javaproxy.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -136,13 +108,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UseCaseNotification" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.gubee.lucas.abstractfactory.shader.UseCaseNotification" />
+      <module name="Gubee-Challenges" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gubee.lucas.abstractfactory.shader.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.UseCaseNotification" />
         <item itemvalue="Application.TestShader" />
         <item itemvalue="Application.TestFactory" />
         <item itemvalue="Application.TestProxy" />
-        <item itemvalue="Application.TestJavaProxy" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -155,7 +140,7 @@
       <option name="presentableId" value="Default" />
       <updated>1668596980447</updated>
       <workItem from="1668596981984" duration="10923000" />
-      <workItem from="1668679348652" duration="6368000" />
+      <workItem from="1668679348652" duration="8352000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1668604693843</created>

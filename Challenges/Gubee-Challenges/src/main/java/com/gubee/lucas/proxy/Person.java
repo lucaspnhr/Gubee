@@ -2,8 +2,6 @@ package com.gubee.lucas.proxy;
 
 import com.gubee.lucas.annotation.Transactional;
 
-import javax.xml.namespace.QName;
-
 public class Person extends Human{
 
 
