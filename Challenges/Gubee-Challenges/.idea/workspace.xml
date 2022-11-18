@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81b28442-bc15-4516-8557-8862b25d4eaf" name="Changes" comment="Implementing annotation using java proxy and reflection">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/annotation/abstractandproxy/PixelShaderProxy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/UseCaseNotification.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/ShaderManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/ShaderManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEitghPixelShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEitghPixelShader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEightFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/geforceeitgh/GeforceEightFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/gfx/GFXFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/concrete/gfx/GFXFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/interfaces/VertexShader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/abstractfactory/shader/interfaces/VertexShader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/annotation/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/annotation/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/proxy/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gubee/lucas/proxy/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/gubee/lucas/annotation/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gubee/lucas/annotation/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +141,8 @@
       <option name="presentableId" value="Default" />
       <updated>1668596980447</updated>
       <workItem from="1668596981984" duration="10923000" />
-      <workItem from="1668679348652" duration="8352000" />
+      <workItem from="1668679348652" duration="14271000" />
+      <workItem from="1668769838159" duration="1940000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1668604693843</created>

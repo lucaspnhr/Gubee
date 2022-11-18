@@ -15,8 +15,7 @@ public class Main {
 
         PixelShader pixelShader = shaderFactory.createPixelShader();
 
-        PixelShader proxied = new PixelShaderProxy(pixelShader);
 
-        proxied.processPixelShader();
+        pixelShader.processPixelShader();
     }
 }
