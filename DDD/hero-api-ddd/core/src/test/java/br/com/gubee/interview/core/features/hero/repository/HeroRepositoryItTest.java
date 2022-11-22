@@ -1,7 +1,8 @@
 package br.com.gubee.interview.core.features.hero.repository;
 
 import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
-import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepositoryImpl;
+import br.com.gubee.interview.core.infrastructure.persistence.jdbc.PowerStatsRepositoryJdbcImpl;
+import br.com.gubee.interview.core.infrastructure.persistence.jdbc.HeroRepositoryJdbcImpl;
 import br.com.gubee.interview.domain.model.hero.Hero;
 import br.com.gubee.interview.domain.model.powerstats.PowerStats;
 import br.com.gubee.interview.domain.model.hero.enums.Race;
@@ -36,8 +37,8 @@ class HeroRepositoryItTest {
 
     @BeforeEach
     void setUp() {
-        heroRepository = new HeroRepositoryImpl(namedParameterJdbcTemplate);
-        powerStatsRepository = new PowerStatsRepositoryImpl(namedParameterJdbcTemplate);
+        heroRepository = new HeroRepositoryJdbcImpl(namedParameterJdbcTemplate);
+        powerStatsRepository = new PowerStatsRepositoryJdbcImpl(namedParameterJdbcTemplate);
         powerStatsId =  powerStatsRepository.create(getPowerStats());
     }
 

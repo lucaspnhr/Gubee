@@ -1,6 +1,6 @@
 package br.com.gubee.interview.core.features.hero.controller;
 
-import br.com.gubee.interview.core.features.hero.service.HeroService;
+import br.com.gubee.interview.core.application.HeroService;
 import br.com.gubee.interview.domain.model.hero.enums.Race;
 import br.com.gubee.interview.domain.model.request.CreateHeroRequest;
 import br.com.gubee.interview.domain.model.request.UpdateHeroRequest;

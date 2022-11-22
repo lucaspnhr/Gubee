@@ -1,11 +1,13 @@
 package br.com.gubee.interview.core.features.hero.service;
 
-import br.com.gubee.interview.core.exception.customException.HeroAlredyExistsException;
-import br.com.gubee.interview.core.exception.customException.NotFoundHeroException;
+import br.com.gubee.interview.core.application.impl.HeroServiceImpl;
+import br.com.gubee.interview.core.application.HeroService;
+import br.com.gubee.interview.core.application.util.exception.HeroAlredyExistsException;
+import br.com.gubee.interview.core.application.util.exception.NotFoundHeroException;
 import br.com.gubee.interview.core.features.hero.repository.HeroRepositoryStubImpl;
-import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepositoryStubImpl;
-import br.com.gubee.interview.core.features.powerstats.service.PowerStatsService;
-import br.com.gubee.interview.core.features.powerstats.service.PowerStatsServiceStubImpl;
+import br.com.gubee.interview.core.infrastructure.persistence.jdbc.PowerStatsRepositoryStubImpl;
+import br.com.gubee.interview.core.application.PowerStatsService;
+import br.com.gubee.interview.core.application.impl.PowerStatsServiceStubImpl;
 import br.com.gubee.interview.domain.model.hero.enums.Race;
 import br.com.gubee.interview.domain.model.request.CreateHeroRequest;
 import br.com.gubee.interview.domain.model.request.RetrieveHeroRequest;

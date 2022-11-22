@@ -1,5 +1,6 @@
 package br.com.gubee.interview.core.features.powerstats.repository;
 
+import br.com.gubee.interview.core.infrastructure.persistence.jdbc.PowerStatsRepositoryJdbcImpl;
 import br.com.gubee.interview.domain.model.powerstats.PowerStats;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,7 @@ public class PowerStatsRepositoryItTest {
 
     @BeforeEach
     void setUp() {
-        powerStatsRepository = new PowerStatsRepositoryImpl(namedParameterJdbcTemplate);
+        powerStatsRepository = new PowerStatsRepositoryJdbcImpl(namedParameterJdbcTemplate);
     }
 
     @AfterEach
