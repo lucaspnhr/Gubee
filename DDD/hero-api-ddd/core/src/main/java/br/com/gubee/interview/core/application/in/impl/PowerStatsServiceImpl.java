@@ -1,9 +1,9 @@
-package br.com.gubee.interview.core.application.impl;
+package br.com.gubee.interview.core.application.in.impl;
 
-import br.com.gubee.interview.core.application.PowerStatsService;
+import br.com.gubee.interview.core.application.in.PowerStatsService;
 import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
 import br.com.gubee.interview.domain.model.powerstats.PowerStats;
-import br.com.gubee.interview.domain.model.powerstats.PowerStatsRepository;
+import br.com.gubee.interview.core.application.out.PowerStatsRepository;
 import br.com.gubee.interview.domain.model.request.UpdateHeroRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -2,19 +2,13 @@ package br.com.gubee.interview.core.infrastructure.persistence.jdbc;
 
 import br.com.gubee.interview.domain.model.hero.Hero;
 import br.com.gubee.interview.domain.model.hero.HeroId;
-import br.com.gubee.interview.domain.model.hero.HeroRepository;
-import br.com.gubee.interview.domain.model.hero.enums.Race;
-import br.com.gubee.interview.domain.model.powerstats.*;
+import br.com.gubee.interview.core.application.out.HeroRepository;
 import br.com.gubee.interview.model.PowerStats;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 @Repository

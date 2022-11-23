@@ -1,6 +1,6 @@
-package br.com.gubee.interview.core.application.impl;
+package br.com.gubee.interview.core.application.in.impl;
 
-import br.com.gubee.interview.core.application.PowerStatsService;
+import br.com.gubee.interview.core.application.in.PowerStatsService;
 import br.com.gubee.interview.core.features.powerstats.repository.PowerStatsRepository;
 import br.com.gubee.interview.core.infrastructure.persistence.jdbc.PowerStatsRepositoryStubImpl;
 import br.com.gubee.interview.domain.model.powerstats.PowerStats;

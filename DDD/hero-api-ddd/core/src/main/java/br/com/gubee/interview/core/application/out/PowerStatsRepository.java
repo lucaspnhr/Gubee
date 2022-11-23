@@ -1,4 +1,4 @@
-package br.com.gubee.interview.domain.model.powerstats;
+package br.com.gubee.interview.core.application.out;
 
 import br.com.gubee.interview.core.features.shared.repository.BaseRepository;
 

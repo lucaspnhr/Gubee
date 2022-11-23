@@ -1,4 +1,7 @@
-package br.com.gubee.interview.domain.model.hero;
+package br.com.gubee.interview.core.application.out;
+
+import br.com.gubee.interview.domain.model.hero.Hero;
+import br.com.gubee.interview.domain.model.hero.HeroId;
 
 import java.util.List;
 import java.util.Optional;

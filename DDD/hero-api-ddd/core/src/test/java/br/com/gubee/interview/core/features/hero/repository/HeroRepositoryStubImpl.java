@@ -1,7 +1,7 @@
 package br.com.gubee.interview.core.features.hero.repository;
 
-import br.com.gubee.interview.core.application.PowerStatsService;
-import br.com.gubee.interview.core.application.impl.PowerStatsServiceStubImpl;
+import br.com.gubee.interview.core.application.in.PowerStatsService;
+import br.com.gubee.interview.core.application.in.impl.PowerStatsServiceStubImpl;
 import br.com.gubee.interview.core.features.util.constants.HeroIds;
 import br.com.gubee.interview.core.features.util.constants.PowerStatsIdsByHero;
 import br.com.gubee.interview.domain.model.hero.Hero;

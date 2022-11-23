@@ -1,6 +1,6 @@
 package br.com.gubee.interview.core.features.hero.service;
 
-import br.com.gubee.interview.core.application.HeroService;
+import br.com.gubee.interview.core.application.in.HeroService;
 import br.com.gubee.interview.core.application.util.exception.NotFoundHeroException;
 import br.com.gubee.interview.core.features.hero.repository.HeroRepositoryStubImpl;
 import br.com.gubee.interview.domain.model.hero.Hero;

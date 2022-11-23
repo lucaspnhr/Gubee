@@ -1,11 +1,11 @@
-package br.com.gubee.interview.core.application.impl;
+package br.com.gubee.interview.core.application.in.impl;
 
-import br.com.gubee.interview.core.application.HeroService;
+import br.com.gubee.interview.core.application.in.HeroService;
 import br.com.gubee.interview.core.application.util.exception.HeroAlredyExistsException;
 import br.com.gubee.interview.core.application.util.exception.NotFoundHeroException;
-import br.com.gubee.interview.core.application.PowerStatsService;
+import br.com.gubee.interview.core.application.in.PowerStatsService;
 import br.com.gubee.interview.domain.model.hero.Hero;
-import br.com.gubee.interview.domain.model.hero.HeroRepository;
+import br.com.gubee.interview.core.application.out.HeroRepository;
 import br.com.gubee.interview.domain.model.powerstats.PowerStats;
 import br.com.gubee.interview.domain.model.request.CreateHeroRequest;
 import br.com.gubee.interview.domain.model.request.RetrieveHeroRequest;
