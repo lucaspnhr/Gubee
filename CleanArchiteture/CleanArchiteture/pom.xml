@@ -29,6 +29,7 @@
         <module>api-out</module>
         <module>application</module>
         <module>commom</module>
+        <module>configuration</module>
     </modules>
 
     <dependencyManagement>
@@ -51,6 +52,21 @@
             <dependency>
                 <groupId>com.github.lucaspnhr</groupId>
                 <artifactId>api-out</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.lucaspnhr</groupId>
+                <artifactId>persistence-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.lucaspnhr</groupId>
+                <artifactId>web-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.lucaspnhr</groupId>
+                <artifactId>application</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

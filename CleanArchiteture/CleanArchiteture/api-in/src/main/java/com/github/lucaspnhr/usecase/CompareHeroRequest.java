@@ -1,11 +1,13 @@
 package com.github.lucaspnhr.usecase;
 
 import lombok.Builder;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Data
 public class CompareHeroRequest {
     private Map<UUID, String> heroes = new HashMap<>();
     private int strength;

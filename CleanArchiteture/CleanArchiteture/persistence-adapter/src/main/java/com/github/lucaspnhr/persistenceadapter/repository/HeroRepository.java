@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-@Repository
+
 public interface HeroRepository extends JpaRepository<HeroJPAEntity, UUID> {
 }

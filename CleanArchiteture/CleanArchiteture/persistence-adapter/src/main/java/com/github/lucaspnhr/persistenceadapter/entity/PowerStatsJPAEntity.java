@@ -10,7 +10,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "power-stats")
+@Table(name = "power_stats")
 @Data
 public class PowerStatsJPAEntity {
     @Id
