@@ -13,6 +13,7 @@ public class CompareHeroService implements CompareHeroUseCase {
 
     private final LoadHeroPort loadHeroPort;
 
+
     @Override
     public CompareHeroRequest compareTwoHeroes(UUID firstHeroId, UUID secondHeroId) {
         RetrieveHeroRequest firstHero = loadHeroPort.loadHeroByid(firstHeroId);

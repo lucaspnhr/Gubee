@@ -28,10 +28,16 @@
         <module>api-in</module>
         <module>api-out</module>
         <module>application</module>
+        <module>commom</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.github.lucaspnhr</groupId>
+                <artifactId>commom</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.github.lucaspnhr</groupId>
                 <artifactId>domain</artifactId>

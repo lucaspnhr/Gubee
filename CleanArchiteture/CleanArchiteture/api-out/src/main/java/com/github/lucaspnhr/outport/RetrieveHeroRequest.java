@@ -1,5 +1,6 @@
 package com.github.lucaspnhr.outport;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,11 +14,15 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class RetrieveHeroRequest {
     @NotNull
     private UUID heroId;
+    @NotNull
+    private UUID powerStatsid;
     @NotBlank
     private String name;
+    private String race;
     @Min(0)
     @Max(10)
     private int strength;
