@@ -21,6 +21,9 @@ public class HeroId implements ValueObject<HeroId> {
         return id;
     }
 
+    public String getStringnifyId(){
+        return id.toString();
+    }
 
     @Override
     public boolean equals(Object o) {

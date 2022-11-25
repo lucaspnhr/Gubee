@@ -1,5 +1,6 @@
 package com.github.lucaspnhr.persistenceadapter.entity;
 
+import com.github.lucaspnhr.outport.SaveHeroCommand;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -38,6 +39,15 @@ public class HeroJPAEntity {
 
     public HeroJPAEntity() {
 
+    }
+
+    public HeroJPAEntity(SaveHeroCommand saveHeroCommand) {
+        this.heroId = saveHeroCommand.getHeroId();
+        this.name = saveHeroCommand.getName();
+        this.race = saveHeroCommand.getRace();
+        this.powerStatsId = saveHeroCommand.getPowerStatsid();
+        this.createdAt = saveHeroCommand.getHeroCreatedAt();
+        this.updatedAt = saveHeroCommand.getHeroUpdatedAt();
     }
 
     public UUID getHeroId() {

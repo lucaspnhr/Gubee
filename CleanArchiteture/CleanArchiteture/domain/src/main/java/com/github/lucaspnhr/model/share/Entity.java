@@ -34,10 +34,19 @@ public abstract class Entity<ID> {
         return id;
     }
 
+    public Instant getCreatedAt() {
+        return Instant.from(createdAt);
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void setUpdatedAt(Instant updatedAt) {
         Validate.isTrue(!updatedAt.isBefore(createdAt), "updated at cannot be before created");
         this.updatedAt = updatedAt;
     }
+
 
     @Override
     public boolean equals(Object o) {

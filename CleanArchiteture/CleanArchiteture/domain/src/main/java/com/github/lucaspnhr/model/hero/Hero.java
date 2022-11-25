@@ -1,14 +1,17 @@
 package com.github.lucaspnhr.model.hero;
 
 import com.github.lucaspnhr.model.hero.enums.Race;
-import com.github.lucaspnhr.model.powerstats.PowerStats;
+import com.github.lucaspnhr.model.powerstats.*;
 import com.github.lucaspnhr.model.share.Entity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.Validate;
 
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.github.lucaspnhr.model.share.util.Constants.INVALID_MESSAGE;
 
@@ -63,6 +66,19 @@ public class Hero extends Entity<HeroId>{
             this.powerStats.updateStats(powerStats);
         }
         return true;
+    }
+
+    public Map<String, Integer> compareStats(PowerStats otherHeroStats){
+        Map<String, Integer> resultDifferenceMap = new HashMap<>();
+        Strength strength = this.powerStats.compareStrength(otherHeroStats.getStrength());
+        Agility agility = this.powerStats.compareAgility(otherHeroStats.getAgility());
+        Intelligence intelligence = this.powerStats.compareIntelligence(otherHeroStats.getIntelligence());
+        Dexterity dexterity = this.powerStats.compareDexterity(otherHeroStats.getDexterity());
+        resultDifferenceMap.put("strength", strength.getValue());
+        resultDifferenceMap.put("agility", agility.getValue());
+        resultDifferenceMap.put("intelligence", intelligence.getValue());
+        resultDifferenceMap.put("dexterity", dexterity.getValue());
+        return resultDifferenceMap;
     }
 
 

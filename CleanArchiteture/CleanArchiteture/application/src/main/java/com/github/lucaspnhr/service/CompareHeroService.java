@@ -1,12 +1,14 @@
 package com.github.lucaspnhr.service;
 
+import com.github.lucaspnhr.model.hero.Hero;
 import com.github.lucaspnhr.outport.LoadHeroPort;
-import com.github.lucaspnhr.outport.RetrieveHeroRequest;
-import com.github.lucaspnhr.usecase.CompareHeroRequest;
+import com.github.lucaspnhr.outport.RetrievedHero;
+import com.github.lucaspnhr.usecase.request.CompareHeroRequest;
 import com.github.lucaspnhr.usecase.CompareHeroUseCase;
-import lombok.Data;
+import com.github.lucaspnhr.util.RetrieveHeroRequestMap;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -17,22 +19,22 @@ public class CompareHeroService implements CompareHeroUseCase {
 
     @Override
     public CompareHeroRequest compareTwoHeroes(UUID firstHeroId, UUID secondHeroId) {
-        RetrieveHeroRequest firstHero = loadHeroPort.loadHeroByid(firstHeroId);
-        RetrieveHeroRequest secondHero = loadHeroPort.loadHeroByid(secondHeroId);
-        int differenceStrength = Math.abs(firstHero.getStrength() - secondHero.getStrength());
-        int agilityRate = Math.abs(firstHero.getAgility() - secondHero.getAgility());
-        int intelligenceRate = Math.abs(firstHero.getIntelligence() - secondHero.getIntelligence());
-        int dexterityRate = Math.abs(firstHero.getDexterity() - secondHero.getDexterity());
+        RetrievedHero firstRetrievedHero = loadHeroPort.loadHeroByid(firstHeroId);
+        RetrievedHero secondRetrievedHero = loadHeroPort.loadHeroByid(secondHeroId);
+
+        Hero firstHero = RetrieveHeroRequestMap.toHero(firstRetrievedHero);
+        Hero secondHero = RetrieveHeroRequestMap.toHero(secondRetrievedHero);
+
+        Map<String, Integer> comparedResult = firstHero.compareStats(secondHero.getPowerStats());
+
         return new CompareHeroRequest(firstHeroId,
                 secondHeroId,
                 firstHero.getName(),
                 secondHero.getName(),
-                differenceStrength,
-                agilityRate,
-                intelligenceRate,
-                dexterityRate);
+                comparedResult.get("strength"),
+                comparedResult.get("agility"),
+                comparedResult.get("intelligence"),
+                comparedResult.get("dexterity"));
     }
-
-
 
 }

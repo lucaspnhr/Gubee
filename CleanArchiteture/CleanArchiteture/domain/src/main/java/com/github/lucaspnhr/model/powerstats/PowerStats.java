@@ -32,6 +32,30 @@ public class PowerStats extends Entity<PowerStatsId> {
         this.dexterity = dexterity;
     }
 
+    public PowerStats(PowerStatsId powerStatsId, Strength strength, Intelligence intelligence, Agility agility, Dexterity dexterity) {
+        super(powerStatsId);
+        Validate.notNull(strength, INVALID_MESSAGE.formatted("strength"));
+        Validate.notNull(intelligence, INVALID_MESSAGE.formatted("intelligence"));
+        Validate.notNull(agility, INVALID_MESSAGE.formatted("agility"));
+        Validate.notNull(dexterity, INVALID_MESSAGE.formatted("dexterity"));
+        this.strength = strength;
+        this.intelligence = intelligence;
+        this.agility = agility;
+        this.dexterity = dexterity;
+    }
+
+    public Strength compareStrength(Strength strength){
+        return new Strength(Math.abs(this.strength.getValue() - strength.getValue()));
+    }
+    public Agility compareAgility(Agility agility){
+        return new Agility(Math.abs(this.agility.getValue() - strength.getValue()));
+    }
+    public Intelligence compareIntelligence(Intelligence intelligence){
+        return new Intelligence(Math.abs(this.intelligence.getValue() - strength.getValue()));
+    }
+    public Dexterity compareDexterity(Dexterity dexterity){
+        return new Dexterity(Math.abs(this.dexterity.getValue() - strength.getValue()));
+    }
     public void updateStats(@NonNull PowerStats powerStats) {
         powerStats.setAgility(powerStats.agility);
         powerStats.setIntelligence(powerStats.intelligence);

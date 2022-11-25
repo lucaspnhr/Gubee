@@ -1,4 +1,4 @@
-package com.github.lucaspnhr.usecase;
+package com.github.lucaspnhr.usecase.request;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.github.lucaspnhr.usecase;
+package com.github.lucaspnhr.usecase.request;
 
 import com.github.lucaspnhr.commom.SelfValidating;
 

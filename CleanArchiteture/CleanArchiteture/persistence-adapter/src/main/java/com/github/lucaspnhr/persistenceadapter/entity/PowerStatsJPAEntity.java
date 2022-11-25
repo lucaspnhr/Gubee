@@ -1,5 +1,6 @@
 package com.github.lucaspnhr.persistenceadapter.entity;
 
+import com.github.lucaspnhr.outport.SaveHeroCommand;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -40,5 +41,15 @@ public class PowerStatsJPAEntity {
     }
 
     public PowerStatsJPAEntity() {
+    }
+
+    public PowerStatsJPAEntity(SaveHeroCommand saveHeroCommand) {
+        this.id = saveHeroCommand.getPowerStatsid();
+        this.strength = saveHeroCommand.getStrength();
+        this.agility = saveHeroCommand.getAgility();
+        this.intelligence = saveHeroCommand.getIntelligence();
+        this.dexterity = saveHeroCommand.getDexterity();
+        this.createdAt = saveHeroCommand.getPowerStatsCreatedAt();
+        this.updatedAt = saveHeroCommand.getPowerStatsUpdatedAt();
     }
 }
