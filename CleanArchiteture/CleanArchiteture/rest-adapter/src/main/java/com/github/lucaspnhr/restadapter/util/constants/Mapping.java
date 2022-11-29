@@ -1,4 +1,4 @@
-package com.github.lucaspnhr.webadapter.util.constants;
+package com.github.lucaspnhr.restadapter.util.constants;
 
 public final class Mapping {
 

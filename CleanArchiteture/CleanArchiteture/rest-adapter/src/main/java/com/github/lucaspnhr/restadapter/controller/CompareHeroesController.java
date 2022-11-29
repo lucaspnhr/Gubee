@@ -1,4 +1,4 @@
-package com.github.lucaspnhr.webadapter.controller;
+package com.github.lucaspnhr.restadapter.controller;
 
 import com.github.lucaspnhr.usecase.request.CompareHeroRequest;
 import com.github.lucaspnhr.usecase.CompareHeroUseCase;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
-import static com.github.lucaspnhr.webadapter.util.constants.Mapping.BASE_URL;
+import static com.github.lucaspnhr.restadapter.util.constants.Mapping.BASE_URL;
 
 @RestController
 @RequestMapping(BASE_URL+"/compare")

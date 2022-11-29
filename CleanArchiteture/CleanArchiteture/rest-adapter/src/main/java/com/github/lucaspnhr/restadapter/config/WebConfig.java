@@ -1,9 +1,9 @@
-package com.github.lucaspnhr.webadapter.config;
+package com.github.lucaspnhr.restadapter.config;
 
+import com.github.lucaspnhr.restadapter.controller.CompareHeroesController;
+import com.github.lucaspnhr.restadapter.controller.RegisterHeroController;
 import com.github.lucaspnhr.usecase.CompareHeroUseCase;
 import com.github.lucaspnhr.usecase.RegisterHeroUseCase;
-import com.github.lucaspnhr.webadapter.controller.CompareHeroesController;
-import com.github.lucaspnhr.webadapter.controller.RegisterHeroController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

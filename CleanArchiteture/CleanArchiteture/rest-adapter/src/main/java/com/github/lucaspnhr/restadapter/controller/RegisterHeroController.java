@@ -1,4 +1,4 @@
-package com.github.lucaspnhr.webadapter.controller;
+package com.github.lucaspnhr.restadapter.controller;
 
 import com.github.lucaspnhr.usecase.RegisterHeroUseCase;
 import com.github.lucaspnhr.usecase.request.RegisterHeroRequest;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.UUID;
 
-import static com.github.lucaspnhr.webadapter.util.constants.Mapping.BASE_URL;
+import static com.github.lucaspnhr.restadapter.util.constants.Mapping.BASE_URL;
 import static java.lang.String.format;
 
 @RestController

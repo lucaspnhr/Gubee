@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.lucaspnhr</groupId>
-            <artifactId>web-adapter</artifactId>
+            <artifactId>rest-adapter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

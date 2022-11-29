@@ -23,7 +23,7 @@
     </properties>
     <modules>
         <module>persistence-adapter</module>
-        <module>web-adapter</module>
+        <module>rest-adapter</module>
         <module>domain</module>
         <module>api-in</module>
         <module>api-out</module>
@@ -61,7 +61,7 @@
             </dependency>
             <dependency>
                 <groupId>com.github.lucaspnhr</groupId>
-                <artifactId>web-adapter</artifactId>
+                <artifactId>rest-adapter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
