@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.lucaspnhr</groupId>
-	<artifactId>jms-consumer-practice</artifactId>
+	<artifactId>jms-consumer-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jms-consumer-practice</name>
 	<description>Demo project for Spring Boot</description>
