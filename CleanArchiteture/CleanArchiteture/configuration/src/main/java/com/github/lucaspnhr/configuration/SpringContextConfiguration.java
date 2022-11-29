@@ -8,17 +8,20 @@ import com.github.lucaspnhr.service.RegisterHeroService;
 import com.github.lucaspnhr.usecase.CompareHeroUseCase;
 import com.github.lucaspnhr.usecase.RegisterHeroUseCase;
 import com.github.lucaspnhr.webadapter.config.WebConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
+@Configuration
 @Import({JpaConfig.class, WebConfig.class})
 public class SpringContextConfiguration {
 
-    @Autowired
-    private LoadHeroPort loadHeroPort;
-    @Autowired
-    private SaveHeroPort saveHeroPort;
+    private final LoadHeroPort loadHeroPort;
+    private final SaveHeroPort saveHeroPort;
+
+    public SpringContextConfiguration(LoadHeroPort loadHeroPort, SaveHeroPort saveHeroPort) {
+        this.loadHeroPort = loadHeroPort;
+        this.saveHeroPort = saveHeroPort;
+    }
 
     @Bean
     public CompareHeroUseCase compareHeroUseCase(){

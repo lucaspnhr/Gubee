@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>jms-in-practice - 1.0.0-SNAPSHOT</title>
+
+    </head>
+    <body>
+        <main>
+            <h1>Shipment Service</h1>
+            <form action="/ship/submit" id="form" method="get">
+                <label for="weight-input">Weight of product: </label>
+                <input type="text" name="weight" id="weight-input">
+                <label for="product-name-input">Name of product: </label>
+                <input type="text" name="product-name" id="product-name-input">
+                <input type="submit" value="send">
+            </form>
+
+            <h2 id="place-shipment-message"></h2>
+        </main>
+
+    <script>
+        const form = document.getElementById('form');
+        const weight = document.getElementById('weight-input');
+        const productName = document.getElementById('product-name-input');
+        const message = document.getElementById('place-shipment-message');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            fetch(`/ship/submit?weight=${weight.value}&product-name=${productName.value}`).then(function (response) {
+                response.text().then(function (text) {
+                    message.textContent = text;
+                })
+            })
+
+        });
+    </script>
+    </body>
+</html>
